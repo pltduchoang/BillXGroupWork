@@ -47,6 +47,8 @@ function SettingApp() {
       accounts = JSON.stringify(Object.values(accounts), null, 2);
       categories = JSON.stringify(Object.values(categories), null, 2);
 
+      //create the folder if it doesn't exist
+      await RNFS.mkdir(RNFS.DocumentDirectoryPath + '/src/database/', { NSURLIsExcludedFromBackupKey: true });
       const databaseFolderPath = RNFS.DocumentDirectoryPath + '/src/database/';
 
       console.log('RNFS.DocumentDirectoryPath:', RNFS.DocumentDirectoryPath);
