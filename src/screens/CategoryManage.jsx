@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ScrollView, Text, TextInput, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import CategoryOverview from './CategoryOverview';
+
 
 function CategoryMange({ onCategoryAdded }) {
   const [newCategory, setNewCategory] = useState([]);
@@ -27,11 +27,11 @@ function CategoryMange({ onCategoryAdded }) {
         placeholder="New Category"
         value={newCategory}
         onChangeText={(text) => setNewCategory(text)}
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1, margin: 10, padding: 10 }}
+        style={{ height: 60, borderColor: 'gray', borderWidth: 1, margin: 10, padding: 10 }}
       />
 
-      <Pressable onPress={addCategory}>
-        <Text>Add Category</Text>
+      <Pressable onPress={addCategory} style={{ backgroundColor: '#427D9D', padding: 20, margin: 10, borderRadius: 5 }}>
+        <Text style={{ color: 'white', fontSize:20 }}>Add Category</Text>
       </Pressable>
 
       
