@@ -25,9 +25,9 @@ const SpendingCard = ({ expense, onLongPress }) => {
               alignItems: "center",
             }
           }>
-            <Text style={{ color: "#DDF2FD" }}>{expense.time}</Text>
+            <Text style={{ color: "#DDF2FD" }}>{expense.time.toLocaleString()}</Text>
             <Text style={{ color: "#DDF2FD" }}>{expense.amount}</Text>
-            <Text style={{ color: "#DDF2FD" }}>{expense.category}</Text>
+            <Text style={{ color: "#DDF2FD" }}>{expense.description}</Text>
           </Card>
       </TouchableOpacity>
     );
