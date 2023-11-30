@@ -3,9 +3,9 @@ import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { Card } from '@rneui/themed';
 
 
-const SpendingCard = ({ expense, onLongPress }) => {
+const SpendingCard = ({ spending, onLongPress }) => {
     const handleLongPress = () => {
-      onLongPress(expense);
+      onLongPress(spending);
     };
   
     return (
@@ -13,7 +13,7 @@ const SpendingCard = ({ expense, onLongPress }) => {
         <Card
           containerStyle={
             {
-              backgroundColor: expense.type === 'spend' ? "#427D9D" : "#9BBEC8",
+              backgroundColor: spending.type === 'spend' ? "#427D9D" : "#9BBEC8",
               width: 300,
               height: 90,
               borderRadius: 10,
@@ -25,9 +25,9 @@ const SpendingCard = ({ expense, onLongPress }) => {
               alignItems: "center",
             }
           }>
-            <Text style={{ color: "#DDF2FD" }}>{expense.time.toLocaleString()}</Text>
-            <Text style={{ color: "#DDF2FD" }}>{expense.amount}</Text>
-            <Text style={{ color: "#DDF2FD" }}>{expense.description}</Text>
+            <Text style={{ color: "#DDF2FD" }}>{spending.time.toLocaleString()}</Text>
+            <Text style={{ color: "#DDF2FD" }}>{spending.amount}</Text>
+            <Text style={{ color: "#DDF2FD" }}>{spending.description}</Text>
           </Card>
       </TouchableOpacity>
     );

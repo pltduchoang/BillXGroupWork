@@ -1,92 +1,170 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Modal, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, Modal, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { Button } from 'react-native-elements';
+import { Button } from '@rneui/themed';// Assuming you have a service for creating expenses
+import { updateCategoryData } from '../services/CategoryServices';
+import { updateAccountData } from '../services/AccountServices';
 
-const AddExpenseForm = ({ isVisible, onSave, onClose }) => {
+const AddExpenseForm = ({ category, account, nextID, isVisible, onSave, onClose }) => {
   const [newExpense, setNewExpense] = useState({
     amount: '',
+    type: '',
     time: '',
     description: '',
   });
+  const [isDateTimePickerVisible, setDateTimePickerVisible] = useState(false);
+  const [selectedType, setSelectedType] = useState('');
 
-  const [isDateTimePickerVisible, setDateTimePickerVisibility] = useState(false);
+  const [categoryList, setCategoryList] = useState(category);
+  const [accountList, setAccountList] = useState(account);
+  const [belongToCategory, setBelongToCategory] = useState();
+  const [belongToAccount, setBelongToAccount] = useState();
+
+
+
+  const handleSave = async () => {
+    const updatedCategories = categoryList.map((category) => {
+      if (category === belongToCategory) {
+        category.record.push(nextID);
+      }
+      return category;
+    });
+    await updateCategoryData(updatedCategories);
+
+    const updatedAccounts = accountList.map((account) => {
+      if (account === belongToAccount) {
+        account.record.push(nextID);
+      }
+      return account;
+    });
+
+    await updateAccountData(updatedAccounts);
+    onSave(newExpense); // Trigger callback to inform the parent component about the save action
+  };
+
+  const handleDateTimeConfirm = (dateTime) => {
+    setNewExpense({ ...newExpense, time: dateTime });
+    setDateTimePickerVisible(false);
+  };
 
   const showDateTimePicker = () => {
-    setDateTimePickerVisibility(true);
+    setDateTimePickerVisible(true);
   };
 
   const hideDateTimePicker = () => {
-    setDateTimePickerVisibility(false);
+    setDateTimePickerVisible(false);
   };
 
-  const handleDateTimeConfirm = (date) => {
-    setNewExpense({ ...newExpense, time: date });
-    hideDateTimePicker();
+  const handleTypeSelection = (type) => {
+    setSelectedType(type);
+    setNewExpense({ ...newExpense, type });
   };
 
-  const isFloat = (value) => {
-    // Parse the value as a float
-    const floatValue = parseFloat(value);
-    
-    // Check if the parsed value is a number and not NaN (Not a Number)
-    return !isNaN(floatValue) && Number.isFinite(floatValue) && Number(floatValue) === floatValue;
+  const handleCategorySelection = (selectedCategory) => {
+    setBelongToCategory(selectedCategory);
+    // Perform actions or updates when a category is selected
   };
 
-
-  const handleSave = () => {
-    if (!newExpense.time) {
-      setNewExpense((prevExpense) => {
-        const updatedExpense = { ...prevExpense, time: new Date().toISOString() };
-        onSave(updatedExpense);
-      });
-    } else if (!isFloat(newExpense.amount || !newExpense.amount)) {
-      alert('Please enter a valid amount');
-      return;
-    }
+  const handleAccountSelection = (selectedAccount) => {
+    setBelongToAccount(selectedAccount);
+    // Perform actions or updates when an account is selected
   };
+
+  useEffect(() => {
+    setCategoryList(category);
+    setAccountList(account);
+  },[]);
 
   return (
     <Modal visible={isVisible} animationType="slide">
-      <View style={styles.container}>
-        <Text style={styles.title}>Add Expense</Text>
-        <Text style={styles.label}>Amount</Text>
-        <TextInput
-          value={newExpense.amount}
-          onChangeText={(text) => setNewExpense({ ...newExpense, amount: text })}
-          placeholder="Enter amount"
-          keyboardType="numeric"
-          style={styles.input}
-        />
-        <Text style={styles.label}>Time</Text>
-        <Button
-          title="Pick Date and Time"
-          onPress={showDateTimePicker}
-          buttonStyle={styles.datePickerButton}
-        />
-        <DateTimePickerModal
-          isVisible={isDateTimePickerVisible}
-          mode="datetime"
-          onConfirm={handleDateTimeConfirm}
-          onCancel={hideDateTimePicker}
-        />
-        <Text style={styles.label}>Description</Text>
-        <TextInput
-          value={newExpense.description}
-          onChangeText={(text) => setNewExpense({ ...newExpense, description: text })}
-          placeholder="Enter description"
-          style={styles.input}
-        />
-        <View style={styles.buttonContainer}>
-          <Button title="Save" onPress={handleSave} buttonStyle={styles.button}/>
-          <TouchableOpacity onPress={onClose} style={styles.button}>
-            <Text style={styles.buttonText}>Close</Text>
-          </TouchableOpacity>
+      <ScrollView>
+        <View style={styles.container}>
+          <Text style={styles.title}>Add Expense</Text>
+          <Text style={styles.label}>Amount</Text>
+          <TextInput
+            value={newExpense.amount.toString()}
+            onChangeText={(text) => setNewExpense({ ...newExpense, amount: parseFloat(text) })}
+            placeholder="Enter amount"
+            keyboardType="numeric"
+            style={styles.input}
+          />
+          <Text style={styles.label}>Time</Text>
+          <Button title="Pick Date and Time" onPress={showDateTimePicker} buttonStyle={{ backgroundColor: '#9BBEC8' }} />
+          <DateTimePickerModal
+            isVisible={isDateTimePickerVisible}
+            mode="datetime"
+            onConfirm={handleDateTimeConfirm}
+            onCancel={hideDateTimePicker}
+          />
+          <Text style={styles.label}>Type</Text>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={[
+                styles.button,
+                selectedType === 'gain' ? styles.selectedButton : null,
+              ]}
+              onPress={() => handleTypeSelection('gain')}
+            >
+              <Text style={styles.buttonText}>Gain</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.button,
+                selectedType === 'spend' ? styles.selectedButton : null,
+              ]}
+              onPress={() => handleTypeSelection('spend')}
+            >
+              <Text style={styles.buttonText}>Spend</Text>
+            </TouchableOpacity>
+          </View>
+
+          <Text style={styles.label}>Category</Text>
+          {categoryList.map((category) => (
+            <TouchableOpacity
+              key={category.id}
+              style={[
+                styles.button,
+                belongToCategory === category ? styles.selectedButton : null,
+              ]}
+              onPress={() => handleCategorySelection(category)}
+            >
+              <Text style={styles.buttonText}>{category.categoryName}</Text>
+            </TouchableOpacity>
+          ))}
+
+          <Text style={styles.label}>Account</Text>
+          {accountList.map((account) => (
+            <TouchableOpacity
+              key={account.id}
+              style={[
+                styles.button,
+                belongToAccount === account ? styles.selectedButton : null,
+              ]}
+              onPress={() => handleAccountSelection(account)}
+            >
+              <Text style={styles.buttonText}>{account.accountName}</Text>
+            </TouchableOpacity>
+          ))}
+          <Text style={styles.label}>Description</Text>
+          <TextInput
+            value={newExpense.description}
+            onChangeText={(text) => setNewExpense({ ...newExpense, description: text })}
+            placeholder="Enter description"
+            style={styles.input}
+          />
+          <View style={styles.buttonContainer}>
+            <Button title="Save" onPress={handleSave} buttonStyle={{ backgroundColor: '#9BBEC8' }} />
+            <Button title="Close" onPress={onClose} buttonStyle={{ backgroundColor: '#9BBEC8' }} />
+          </View>
         </View>
-      </View>
+      </ScrollView>
     </Modal>
   );
 };
+
+// Styles...
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -104,7 +182,7 @@ const styles = StyleSheet.create({
   },
   label: {
     color: '#DDF2FD',
-    marginTop: 20,
+    marginTop: 10,
     width: 350,
     textAlign: 'left',
     lineHeight: 50,
@@ -118,10 +196,6 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#DDF2FD',
   },
-  datePickerButton: {
-    backgroundColor: '#9BBEC8',
-    marginBottom: 15,
-  },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -129,16 +203,21 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   button: {
-    backgroundColor: '#9BBEC8',
+    borderWidth: 1,
+    borderColor: '#ccc',
     borderRadius: 5,
     padding: 10,
-    width: '48%', // Adjust the width as per your preference
-    alignItems: 'center',
+    marginBottom: 15,
+    width: '100%',
+    backgroundColor: '#DDF2FD',
+  },
+  selectedButton: {
+    backgroundColor: '#9BBEC8',
+    // Additional styles for the selected button
   },
   buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#000', // Set the text color for buttons
   },
 });
-
 export default AddExpenseForm;

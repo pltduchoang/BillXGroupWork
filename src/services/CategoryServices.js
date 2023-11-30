@@ -2,6 +2,47 @@ import React, { useState } from 'react';
 import fetchData from '../database/spending.json';
 import { View, Text, Pressable, ScrollView, Modal } from 'react-native';
 
+
+
+// DUC ADDED THIS, DO NOT DELETE
+// CategoryServices.js
+import RNFS from 'react-native-fs';
+
+export const getCategoryData = async () => {
+  try {
+    const categoryDataFile = RNFS.DocumentDirectoryPath + '/src/database/category.json';
+    const categoryData = await RNFS.readFile(categoryDataFile, 'utf8');
+    const parsedCategoryData = JSON.parse(categoryData);
+    console.log('parsedCategoryData:', parsedCategoryData);
+    return { success: true, data: parsedCategoryData, error: null };
+  } catch (error) {
+    console.error('Error reading category data:', error);
+    return { success: false, data: null, error: error.message };
+  }
+};
+
+// Update category data to the category.json file
+export const updateCategoryData = async (dataToWrite) => {
+    try {
+        const categoryDataFile = RNFS.DocumentDirectoryPath + '/src/database/category.json';
+        const jsonData = JSON.stringify(dataToWrite); // Convert the data to a JSON string
+
+        // Write the updated category data to the category.json file
+        await RNFS.writeFile(categoryDataFile, jsonData, 'utf8');
+        
+        return { success: true, error: null };
+    } catch (error) {
+        console.error('Error updating category data:', error);
+        return { success: false, error: error.message };
+    }
+};
+
+
+
+
+
+
+
 // Buttons for the categories
 const CategoryButtons = ({ categories, onClick }) => {
   return (
@@ -176,3 +217,6 @@ const CategoryServices = () => {
 };
 
 export default CategoryServices;
+
+
+

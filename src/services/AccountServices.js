@@ -13,3 +13,19 @@ export const getAccountData = async () => {
     return { success: false, data: null, error: error.message };
   }
 };
+
+// Update account data to the account.json file
+export const updateAccountData = async (dataToWrite) => {
+    try {
+        const accountDataFile = RNFS.DocumentDirectoryPath + '/src/database/account.json';
+        const jsonData = JSON.stringify(dataToWrite); // Convert the data to a JSON string
+
+        // Write the updated account data to the account.json file
+        await RNFS.writeFile(accountDataFile, jsonData, 'utf8');
+        
+        return { success: true, error: null };
+    } catch (error) {
+        console.error('Error updating account data:', error);
+        return { success: false, error: error.message };
+    }
+};
