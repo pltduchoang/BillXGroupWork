@@ -15,8 +15,8 @@ const AddExpenseForm = ({ category, account, nextID, isVisible, onSave, onClose 
   const [isDateTimePickerVisible, setDateTimePickerVisible] = useState(false);
   const [selectedType, setSelectedType] = useState('');
 
-  const [categoryList, setCategoryList] = useState(category);
-  const [accountList, setAccountList] = useState(account);
+  const [categoryList, setCategoryList] = useState();
+  const [accountList, setAccountList] = useState();
   const [belongToCategory, setBelongToCategory] = useState();
   const [belongToAccount, setBelongToAccount] = useState();
 
@@ -71,8 +71,11 @@ const AddExpenseForm = ({ category, account, nextID, isVisible, onSave, onClose 
   };
 
   useEffect(() => {
+    console.log(categoryList);
+    console.log(accountList);
     setCategoryList(category);
     setAccountList(account);
+    
   },[]);
 
   return (
@@ -119,32 +122,42 @@ const AddExpenseForm = ({ category, account, nextID, isVisible, onSave, onClose 
           </View>
 
           <Text style={styles.label}>Category</Text>
-          {categoryList.map((category) => (
-            <TouchableOpacity
-              key={category.id}
-              style={[
-                styles.button,
-                belongToCategory === category ? styles.selectedButton : null,
-              ]}
-              onPress={() => handleCategorySelection(category)}
-            >
-              <Text style={styles.buttonText}>{category.categoryName}</Text>
-            </TouchableOpacity>
-          ))}
+          {categoryList && categoryList.length > 0 ? (
+            categoryList.map((category) => (
+              <TouchableOpacity
+                key={category.id}
+                style={[
+                  styles.button,
+                  belongToCategory === category ? styles.selectedButton : null,
+                ]}
+                onPress={() => handleCategorySelection(category)}
+              >
+                <Text style={styles.buttonText}>{category.categoryName}</Text>
+              </TouchableOpacity>
+            ))
+          ) : (
+            <Text style={styles.label}>No category</Text>
+          )}
 
           <Text style={styles.label}>Account</Text>
-          {accountList.map((account) => (
-            <TouchableOpacity
-              key={account.id}
-              style={[
-                styles.button,
-                belongToAccount === account ? styles.selectedButton : null,
-              ]}
-              onPress={() => handleAccountSelection(account)}
-            >
-              <Text style={styles.buttonText}>{account.accountName}</Text>
-            </TouchableOpacity>
-          ))}
+          {accountList && accountList.length > 0 ? (
+            accountList.map((account) => (
+              <TouchableOpacity
+                key={account.id}
+                style={[
+                  styles.button,
+                  belongToAccount === account ? styles.selectedButton : null,
+                ]}
+                onPress={() => handleAccountSelection(account)}
+              >
+                <Text style={styles.buttonText}>{account.accountName}</Text>
+              </TouchableOpacity>
+            ))
+          ) : (
+            <Text style={styles.label}>No account</Text>
+          )}
+
+
           <Text style={styles.label}>Description</Text>
           <TextInput
             value={newExpense.description}
@@ -208,7 +221,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     marginBottom: 15,
-    width: '100%',
+    width: '50%',
     backgroundColor: '#DDF2FD',
   },
   selectedButton: {

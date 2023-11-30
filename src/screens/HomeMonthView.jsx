@@ -233,8 +233,8 @@ return (
       {showAddModal && (
         <AddExpenseForm
           isVisible={showAddModal}
-          categoryList={categoryData}
-          accountList={accountData}
+          category={categoryData}
+          account={accountData}
           nextID={maxId + 1}
           onSave={handleSaveNewExpense}
           onClose={handleClose}
