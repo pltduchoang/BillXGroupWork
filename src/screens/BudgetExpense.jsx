@@ -88,7 +88,7 @@ function BudgetPage() {
                           <Text>Amount: {filteredItem.amount}</Text>
                           <Text>Budget: {filteredItem.budget}</Text>
                           <Text>Description: {filteredItem.description}</Text>
-                          <Text>Usage: {Math.round(filteredItem.amount/filteredItem.budget * 100)}%</Text>
+                          <Text>Usage: {Math.round(filteredItem.amount/filteredItem.budget * 100) > 100 ? 100 : Math.round(filteredItem.amount/filteredItem.budget * 100)}%</Text>
                         </View>
                       ))}
                 </View>

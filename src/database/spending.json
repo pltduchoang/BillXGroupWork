@@ -5,7 +5,7 @@
       "type": "spend",
       "time": "2023-11-25T08:15:00Z",
       "category": "Groceries",
-      "budget": 0,
+      "budget": 3000,
       "account": "TD Chequing",
       "description": "Grocery shopping"
     },
@@ -35,7 +35,7 @@
       "type": "spend",
       "time": "2023-11-22T18:45:00Z",
       "category": "Transportation",
-      "budget": 0,
+      "budget": 3000,
       "account": "Scotia Credit",
       "description": "Car repair"
     },
@@ -55,7 +55,7 @@
       "type": "spend",
       "time": "2023-11-20T16:30:00Z",
       "category": "Recurring",
-      "budget": 0,
+      "budget": 3000,
       "account": "Scotia Credit",
       "description": "Monthly subscription"
     },
@@ -75,7 +75,7 @@
       "type": "gain",
       "time": "2023-11-18T20:00:00Z",
       "category": "Transportation",
-      "budget": 0,
+      "budget": 3000,
       "account": "TD Chequing",
       "description": "Reimbursement"
     },
@@ -95,7 +95,7 @@
       "type": "gain",
       "time": "2023-11-16T09:30:00Z",
       "category": "Groceries",
-      "budget": 0,
+      "budget": 3000,
       "account": "TD Chequing",
       "description": "Returned item refund"
     },
@@ -135,7 +135,7 @@
       "type": "spend",
       "time": "2023-11-12T12:30:00Z",
       "category": "Recurring",
-      "budget": 0,
+      "budget": 3000,
       "account": "Scotia Saving",
       "description": "Annual subscription"
     },
@@ -145,7 +145,7 @@
       "type": "gain",
       "time": "2023-11-11T09:15:00Z",
       "category": "Groceries",
-      "budget": 0,
+      "budget": 3000,
       "account": "Scotia Saving",
       "description": "Cashback"
     },
@@ -155,7 +155,7 @@
       "type": "spend",
       "time": "2023-11-10T14:00:00Z",
       "category": "Transportation",
-      "budget": 0,
+      "budget": 3000,
       "account": "Scotia Credit",
       "description": "Car repair"
     },
@@ -195,7 +195,7 @@
       "type": "gain",
       "time": "2023-11-06T09:30:00Z",
       "category": "Groceries",
-      "budget": 0,
+      "budget": 3000,
       "account": "TD Chequing",
       "description": "Returned item refund"
     },
@@ -205,7 +205,7 @@
       "type": "spend",
       "time": "2023-11-05T14:20:00Z",
       "category": "Transportation",
-      "budget": 0,
+      "budget": 3000,
       "account": "Scotia Credit",
       "description": "Gas"
     },
@@ -225,7 +225,7 @@
       "type": "gain",
       "time": "2023-11-03T17:00:00Z",
       "category": "Recurring",
-      "budget": 0,
+      "budget": 3000,
       "account": "TD Chequing",
       "description": "Cashback"
     },
@@ -265,7 +265,7 @@
       "type": "spend",
       "time": "2023-10-30T11:30:00Z",
       "category": "Groceries",
-      "budget": 0,
+      "budget": 3000,
       "account": "TD Credit",
       "description": "Grocery shopping"
     },
@@ -275,7 +275,7 @@
       "type": "gain",
       "time": "2023-10-29T18:00:00Z",
       "category": "Transportation",
-      "budget": 0,
+      "budget": 3000,
       "account": "Scotia Saving",
       "description": "Reimbursement"
     },
@@ -295,7 +295,7 @@
       "type": "gain",
       "time": "2023-10-27T09:30:00Z",
       "category": "Recurring",
-      "budget": 0,
+      "budget": 3000,
       "account": "Scotia Credit",
       "description": "Cashback"
     },
@@ -335,7 +335,7 @@
       "type": "spend",
       "time": "2023-10-23T12:30:00Z",
       "category": "Groceries",
-      "budget": 0,
+      "budget": 3000,
       "account": "Scotia Credit",
       "description": "Grocery shopping"
     },
@@ -345,7 +345,7 @@
       "type": "gain",
       "time": "2023-10-22T09:15:00Z",
       "category": "Transportation",
-      "budget": 0,
+      "budget": 3000,
       "account": "TD Credit",
       "description": "Cashback"
     },
@@ -365,7 +365,7 @@
       "type": "spend",
       "time": "2023-10-20T11:30:00Z",
       "category": "Recurring",
-      "budget": 0,
+      "budget": 3000,
       "account": "TD Chequing",
       "description": "Monthly subscription"
     },
@@ -405,7 +405,7 @@
       "type": "spend",
       "time": "2023-10-16T14:20:00Z",
       "category": "Groceries",
-      "budget": 0,
+      "budget": 3000,
       "account": "TD Chequing",
       "description": "Grocery shopping"
     },
@@ -415,7 +415,7 @@
       "type": "spend",
       "time": "2023-10-15T08:45:00Z",
       "category": "Transportation",
-      "budget": 0,
+      "budget": 3000,
       "account": "Scotia Credit",
       "description": "Gas"
     },
@@ -435,7 +435,7 @@
       "type": "spend",
       "time": "2023-10-13T12:30:00Z",
       "category": "Recurring",
-      "budget": 0,
+      "budget": 3000,
       "account": "Scotia Saving",
       "description": "Annual subscription"
     },
@@ -475,7 +475,7 @@
       "type": "gain",
       "time": "2023-10-09T18:00:00Z",
       "category": "Groceries",
-      "budget": 0,
+      "budget": 3000,
       "account": "Scotia Saving",
       "description": "Cashback"
     },
@@ -485,7 +485,7 @@
       "type": "spend",
       "time": "2023-10-08T10:45:00Z",
       "category": "Transportation",
-      "budget": 0,
+      "budget": 3000,
       "account": "TD Chequing",
       "description": "Car repair"
     },
@@ -505,7 +505,7 @@
       "type": "spend",
       "time": "2023-10-06T14:20:00Z",
       "category": "Recurring",
-      "budget": 0,
+      "budget": 3000,
       "account": "TD Credit",
       "description": "Monthly subscription"
     },
