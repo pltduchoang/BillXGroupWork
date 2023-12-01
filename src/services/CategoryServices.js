@@ -21,6 +21,17 @@ export const getCategoryData = async () => {
   }
 };
 
+export const updateCategoryData = async (categoryData) => {
+  try {
+    const categoryDataFile = RNFS.DocumentDirectoryPath + '/src/database/category.json';
+    await RNFS.writeFile(categoryDataFile, JSON.stringify(categoryData), 'utf8');
+    return { success: true, error: null };
+  } catch (error) {
+    console.error('Error writing category data:', error);
+    return { success: false, error: error.message };
+  }
+};
+
 // Attribute for the items
 const CategoryServices = () => {
     try {

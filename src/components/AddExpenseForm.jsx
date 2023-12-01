@@ -9,7 +9,7 @@ const AddExpenseForm = ({ category, account, nextID, isVisible, onSave, onClose 
   const [newExpense, setNewExpense] = useState({
     amount: '',
     type: '',
-    time: '',
+    time: new Date(),
     description: '',
   });
   const [isDateTimePickerVisible, setDateTimePickerVisible] = useState(false);
@@ -39,6 +39,11 @@ const AddExpenseForm = ({ category, account, nextID, isVisible, onSave, onClose 
     });
 
     await updateAccountData(updatedAccounts);
+    if (!newExpense.time) {
+      // If the time is null, set it to the current time
+      setNewExpense({ ...newExpense, time: new Date() });
+    }
+    console.log(newExpense);
     onSave(newExpense); // Trigger callback to inform the parent component about the save action
   };
 
