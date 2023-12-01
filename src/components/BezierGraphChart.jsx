@@ -25,7 +25,7 @@ const BezierGraphChart = ({ labelList, graphData }) => {
       chartConfig={{
         backgroundColor: '#427D9D',
         backgroundGradientFrom: '#427D9D',
-        backgroundGradientTo: '#9BBEC8',
+        backgroundGradientTo: '#427D9D',
         decimalPlaces: 2, // optional, defaults to 2dp
         color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
         labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,

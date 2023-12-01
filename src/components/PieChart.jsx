@@ -4,10 +4,11 @@ import { PieChart } from 'react-native-chart-kit';
 
 const AppPieChart = ({ data }) => {
   const chartConfig = {
-    backgroundColor: '#e26a00',
-    backgroundGradientFrom: '#fb8c00',
-    backgroundGradientTo: '#ffa726',
+    backgroundColor: '#427D9D',
+    backgroundGradientFrom: '#427D9D',
+    backgroundGradientTo: '#427D9D',
     color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+    labelColor: () => '#DDF2FD'
   };
 
   return (

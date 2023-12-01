@@ -7,8 +7,8 @@ import EditExpenseForm from '../components/EditExpenseForm';
 import AddExpenseForm from '../components/AddExpenseForm';
 import { getCategoryData } from '../services/CategoryServices';
 import { getAccountData } from '../services/AccountServices';
-// import BezierGraphChart from '../components/BezierGraphChart';
-// import AppPieChart from '../components/PieChart';
+import BezierGraphChart from '../components/BezierGraphChart';
+import AppPieChart from '../components/PieChart';
 
 
 function HomeMonthView() {
@@ -41,7 +41,7 @@ function HomeMonthView() {
   // Bezier graph data
   const [graphData, setGraphData] = useState([]);
   const [graphLabel, setGraphLabel] = useState([]);
-
+  const [pieChartData, setPieChartData] = useState([]);
 
 
 
@@ -125,6 +125,8 @@ function HomeMonthView() {
     const maxIdInDatabase = Math.max(...spendingData.map(expense => expense.id));
     setMaxId(maxIdInDatabase);
     processGraphData();
+    createChartData();
+    console.log("launched");
   }, [spendingData]);
 
   
@@ -192,12 +194,45 @@ function HomeMonthView() {
     setSpendingData(newDatabase);
   };
 
+  // [
+  //   { name: 'Section 1', value: 30, color: '#FF5733' },
+  //   { name: 'Section 2', value: 50, color: '#33FF57' },
+  //   { name: 'Section 3', value: 20, color: '#3357FF' },
+  // ];
 
-  const chartData = [
-    { name: 'Section 1', value: 30, color: '#FF5733' },
-    { name: 'Section 2', value: 50, color: '#33FF57' },
-    { name: 'Section 3', value: 20, color: '#3357FF' },
-  ];
+  
+  //Prepare pie chart data
+  const colorListPieChart = ['#1f8ac5','#529bc3','#166692','#0e425e','#061e2b','#112029','#203d4f','#010102'];
+
+  const createChartData = () => {
+    const pieChartData = [];
+    if (spendingData.length > 0) {
+      categoryData.forEach((category, index) => {
+        const catName = category.catName;
+        let catTotal = 0;
+        thisMonthSpending.forEach((expense) => {
+          if (category.record.includes(expense.id)) {
+            catTotal += expense.amount;
+          }
+        });
+
+        catTotal = Math.round(catTotal);
+
+        // Use modulo operator to cycle through the color list
+        const color = colorListPieChart[index % colorListPieChart.length];
+
+        pieChartData.push({ name: catName, value: catTotal, color });
+      });
+    }
+    console.log(pieChartData);
+    setPieChartData(pieChartData);
+  };
+  
+
+
+      
+
+
 
   // Graph data for 4 recent months
   const processGraphData = () => {
@@ -218,8 +253,8 @@ function HomeMonthView() {
         const expenseMonth = new Date(expense.time).getMonth() + 1;
         return expenseMonth === currentMonth - 3;
       });
-      const thisMonthTotal = thisMonth.reduce((acc, expense) => acc + expense.amount, 0);
-      const lastMonthTotal = lastMonth.reduce((acc, expense) => acc + expense.amount, 0);
+      const thisMonthTotal = Math.round(thisMonth.reduce((acc, expense) => acc + expense.amount, 0));
+      const lastMonthTotal = Math.round(lastMonth.reduce((acc, expense) => acc + expense.amount, 0));
       const lastLastMonthTotal = lastLastMonth.reduce((acc, expense) => acc + expense.amount, 0);
       const lastLastLastMonthTotal = lastLastLastMonth.reduce((acc, expense) => acc + expense.amount, 0);
       setGraphData([lastLastLastMonthTotal, lastLastMonthTotal, lastMonthTotal, thisMonthTotal]);
@@ -239,11 +274,11 @@ return (
         {/* <Text style={{ color: '#DDF2FD'}}>Spending trend</Text>
         <View style={{marginBottom:30}}>
           <BezierGraphChart labelList={graphLabel} graphData={graphData} />
-        </View> */}
+        </View>
         
-
-        {/* <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <AppPieChart data={chartData} />
+        <Text style={{ color: '#DDF2FD', marginTop: 20}}>Category Spending</Text>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginBottom:20 }}>
+          <AppPieChart data={pieChartData} />
         </View> */}
         
         
