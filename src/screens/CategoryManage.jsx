@@ -21,13 +21,14 @@ function CategoryMange({ onCategoryAdded }) {
 
 
   return (
-    <ScrollView>
+    <ScrollView style={{backgroundColor: '#164863'}}>
       {/* <CategoryOverview /> */}
       <TextInput 
         placeholder="New Category"
         value={newCategory}
         onChangeText={(text) => setNewCategory(text)}
-        style={{ height: 60, borderColor: 'gray', borderWidth: 1, margin: 10, padding: 10 }}
+        style={{ height: 60, borderColor: 'gray', borderWidth: 1, margin: 10, padding: 10, backgroundColor: 'white' }}
+        fontSize={20}
       />
 
       <Pressable onPress={addCategory} style={{ backgroundColor: '#427D9D', padding: 20, margin: 10, borderRadius: 5 }}>

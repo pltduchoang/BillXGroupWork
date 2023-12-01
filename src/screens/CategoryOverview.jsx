@@ -154,8 +154,8 @@ function CategoryOverview() {
   
 
   return (
-      <ScrollView>
-      <Text>Category Buttons</Text>
+      <ScrollView style={{backgroundColor: '#164863'}}>
+      <Text style={{ fontSize: 20, color: 'white', textAlign: 'center', padding: 10}}>Categories of your Expenses</Text>
       <CategoryButtons categories={uniqueCategories} onClick={handleCategoryClick} newCategories={newCategories} />
      
       
@@ -170,7 +170,7 @@ function CategoryOverview() {
 
           <ScrollView>
               {selectedCategory && (
-                  <View>
+                  <View style={{backgroundColor: '#9BBEC8'}}>
                       {/*Close Modal*/}
                       <Pressable onPress={closeModal} style={{padding: 20, alignItems: 'center', backgroundColor: '#427D9D'}}>
                           <Text style={{ color: 'white', fontSize: 20 }}>Close</Text>
