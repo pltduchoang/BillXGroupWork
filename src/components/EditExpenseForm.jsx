@@ -4,6 +4,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import {Button} from '@rneui/themed';
 import { updateCategoryData } from '../services/CategoryServices';
 import { updateAccountData } from '../services/AccountServices';
+import { useAppContext } from '../utils/AppContext';
 
 
 const EditExpenseForm = ({ spending, category, account, isVisible, onSave, onDelete, onClose }) => {
@@ -16,6 +17,9 @@ const EditExpenseForm = ({ spending, category, account, isVisible, onSave, onDel
   const [firstBelongToAccount, setFirstBelongToAccount] = useState();
   const [isDateTimePickerVisible, setDateTimePickerVisible] = useState(false);
   const [selectedType, setSelectedType] = useState('');
+
+  //Handle global state of database
+  const { databaseVersion, setDatabaseVersion } = useAppContext();
 
   const handleSave = async () => {
     if (belongToCategory && firstBelongToCategory && belongToCategory !== firstBelongToCategory) {
@@ -43,7 +47,9 @@ const EditExpenseForm = ({ spending, category, account, isVisible, onSave, onDel
       });
       await updateAccountData(updatedAccounts);
     };
-
+    console.log('Database version:', databaseVersion);
+    setDatabaseVersion(databaseVersion + 1);
+    console.log('Database version updated:', databaseVersion);
     onSave(editedExpense);
   };
 
@@ -78,6 +84,10 @@ const EditExpenseForm = ({ spending, category, account, isVisible, onSave, onDel
     setSelectedType(type);
     setEditedExpense({ ...editedExpense, type });
   };
+
+
+
+
 
   useEffect(() => {
     setEditedExpense(spending);
@@ -191,9 +201,12 @@ const EditExpenseForm = ({ spending, category, account, isVisible, onSave, onDel
             style={styles.input}
           />
           <View style={styles.buttonContainer}>
-            <Button title="Save" onPress={handleSave} buttonStyle={{backgroundColor:'#9BBEC8'}}/>
-            <Button title="Delete" onPress={handleDelete} buttonStyle={{backgroundColor:'#9BBEC8'}} />
-            <Button title="Close" onPress={onClose} buttonStyle={{backgroundColor:'#9BBEC8'}}/>
+            <TouchableOpacity onPress={handleSave} style={styles.buttonEnd}><Text style={{textAlign: 'center'}}>Save</Text></TouchableOpacity>
+            <TouchableOpacity onPress={handleDelete} style={styles.buttonEnd}><Text style={{textAlign: 'center'}}>Delete</Text></TouchableOpacity>
+            <TouchableOpacity onPress={onClose} style={styles.buttonEnd}><Text style={{textAlign: 'center'}}>Close</Text></TouchableOpacity>
+          </View>
+          <View style={{marginTop: 20}}>
+            
           </View>
         </View>
       </ScrollView>
@@ -245,7 +258,19 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     width: '50%',
     backgroundColor: '#DDF2FD',
+
   },
+  buttonEnd: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 15,
+    width: '30%',
+    backgroundColor: '#DDF2FD',
+    
+  },
+
   selectedButton: {
     backgroundColor: '#427D9D',
     // Additional styles for the selected button

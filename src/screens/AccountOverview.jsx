@@ -7,6 +7,7 @@ import { getCategoryData } from '../services/CategoryServices';
 import AccountCard from '../components/AccountCard';
 import { ScrollView } from 'react-native';
 import ExpenseModal from '../components/ExpenseModal';
+import { useAppContext } from '../utils/AppContext';
 
 function AccountOverView() {
   const [accountData, setAccountData] = useState(null);
@@ -18,6 +19,9 @@ function AccountOverView() {
   //handle show modal
   const [showModal, setShowModal] = useState(false);
   const [expenseListForCategory, setExpenseListForCategory] = useState([]);
+
+  //Handle global state of database
+  const { databaseVersion, setDatabaseVersion } = useAppContext();
 
   const fetchAccountData = async () => {
     setLoading(true);
@@ -124,10 +128,16 @@ function AccountOverView() {
   }, []);
 
   useEffect(() => {
+    fetchAccountData();
+    fetchCategoryData();
+    fetchSpending();
+  }, [databaseVersion]);
+
+  useEffect(() => {
     if (accountData && spendingList) {
       accountSpendingCalculation();
     }
-  }, [spendingList, accountData, categoryData]);
+  }, [spendingList]);
 
 
   return (

@@ -7,6 +7,7 @@ import EditExpenseForm from '../components/EditExpenseForm';
 import AddExpenseForm from '../components/AddExpenseForm';
 import { getCategoryData } from '../services/CategoryServices';
 import { getAccountData } from '../services/AccountServices';
+import { useAppContext } from '../utils/AppContext';
 import BezierGraphChart from '../components/BezierGraphChart';
 import AppPieChart from '../components/PieChart';
 
@@ -43,6 +44,8 @@ function HomeMonthView() {
   const [graphLabel, setGraphLabel] = useState([]);
   const [pieChartData, setPieChartData] = useState([]);
 
+  //handle global state of database
+  const { databaseVersion, setDatabaseVersion } = useAppContext();
 
 
   // Fetch account data and category from persistent storage
@@ -137,11 +140,12 @@ function HomeMonthView() {
   // Fetch data on initial render
   useEffect(() => {
     fetchData();
-    // Find the maximum ID from the existing spendingData
-    
-    // Assign a new ID to the newExpense
     
   }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [databaseVersion]);
   
   // Process spending data when spendingData changes
   useEffect(() => {

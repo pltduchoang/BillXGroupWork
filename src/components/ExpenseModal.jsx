@@ -7,6 +7,8 @@ import EditExpenseForm from './EditExpenseForm';
 import { getAccountData } from '../services/AccountServices';
 import { getCategoryData } from '../services/CategoryServices';
 import { getSpending, createSpending } from '../services/SpendingServices';
+import { useAppContext } from '../utils/AppContext';
+import { useNavigation } from '@react-navigation/native';
 
 const ExpenseModal = ({ visible, expenses, closeModal}) => {
 
@@ -16,6 +18,10 @@ const ExpenseModal = ({ visible, expenses, closeModal}) => {
     const [loading, setLoading] = useState(false);
     const [accountData, setAccountData] = useState(null);
     const [categoryData, setCategoryData] = useState(null);
+    const navigation = useNavigation();
+
+    //Handle global state of database
+    const { databaseVersion, setDatabaseVersion } = useAppContext();
 
     
     const handleLongPress = (spending) => {
@@ -92,7 +98,14 @@ const ExpenseModal = ({ visible, expenses, closeModal}) => {
         fetchAccountData();
         fetchCategoryData();
         fetchData();
-      }, [expenses, categoryData]);
+      }, []);
+
+    useEffect(() => {
+      fetchAccountData();
+      fetchCategoryData();
+      fetchData();
+    }, [databaseVersion]);
+
 
     
     return (

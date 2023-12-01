@@ -171,8 +171,8 @@ const AddExpenseForm = ({ category, account, nextID, isVisible, onSave, onClose 
             style={styles.input}
           />
           <View style={styles.buttonContainer}>
-            <Button title="Save" onPress={handleSave} buttonStyle={{ backgroundColor: '#9BBEC8' }} />
-            <Button title="Close" onPress={onClose} buttonStyle={{ backgroundColor: '#9BBEC8' }} />
+            <TouchableOpacity onPress={handleSave} style={styles.buttonEnd}><Text style={{textAlign: 'center'}}>Save</Text></TouchableOpacity>
+            <TouchableOpacity onPress={onClose} style={styles.buttonEnd}><Text style={{textAlign: 'center'}}>Delete</Text></TouchableOpacity>
           </View>
         </View>
       </ScrollView>
@@ -221,6 +221,15 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   button: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 15,
+    width: '50%',
+    backgroundColor: '#DDF2FD',
+  },
+  buttonEnd: {
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
