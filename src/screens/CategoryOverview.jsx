@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import fetchData from '../services/CategoryServices';
 import { View, Text, Pressable, ScrollView, Modal } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { updateCategoryData } from '../services/CategoryServices';
 
 
 const CategoryButtons = ({ categories, onClick, onDelete, newCategories }) => {
@@ -156,7 +157,7 @@ function CategoryOverview() {
   const navigation = useNavigation();
   const route = useRoute();
   const { newCategories } = route.params || { newCategories: [] }; // allows receiving new categories from CategoryManage
-
+  const [spendingData, setSpendingData] = useState([]); // I dont think I need this anymore
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [modalVisable, setModalVisable] = useState(false);
   const [allItems, setAllItems] = useState([]);
@@ -179,6 +180,7 @@ function CategoryOverview() {
     }
   };
  
+  // UseEffect to fetch intial data already in the database
   useEffect(() => {
     fetchDataAndProccess();
   }, []);
@@ -191,6 +193,8 @@ function CategoryOverview() {
     if (Array.isArray(categoriesFromParams)) {
     //   console.log('old categories: ', allItems)
       console.log('New Categories:', categoriesFromParams);
+      setSpendingData(prevCategories => [...prevCategories, categoriesFromParams]);
+      saveToSpending();
     //   setAllItems([...allItems, ...categoriesFromParams]);
         // setAllItems([...categoriesFromParams])
     }
@@ -265,7 +269,47 @@ function CategoryOverview() {
   };
 
  
+  const navigateToCategoryManage = () => {
+    navigation.navigate('CategoryMange');
+  };
 
+  const generateNewId = () => {
+    const totalItems = allItems.length + spendingData.length;
+    return totalItems + 1;
+  };
+
+  const lastOfArray = () => {
+    const lastItem = newCategories[newCategories.length - 1];
+    // const lastItem = lastArray && lastArray[lastArray.length - 1];
+    console.log('Last Item:', lastItem)
+    return lastItem;
+  };
+
+  const saveToSpending = () => {
+    const lastCategory = lastOfArray();
+    const newCategoryToSave = {
+      id: generateNewId(),
+      ammount: 0,
+      type: null,
+      time: null,
+      category: lastCategory,
+      budget: 0,
+      account: null,
+      description: null,
+    };
+    console.log(newCategories)
+    console.log('New Category to save:', newCategoryToSave)
+    // Call the method to save to spending using updateCategoryData
+    updateCategoryData(newCategoryToSave)
+      .then((response) => {
+        // Handle the response if needed
+        console.log('Category data updated successfully:', response);
+      })
+      .catch((error) => {
+        // Handle errors
+        console.error('Error updating category data:', error);
+      });
+  };
 
   return (
       <ScrollView style={{backgroundColor: '#164863'}}>
@@ -276,7 +320,14 @@ function CategoryOverview() {
         onDelete={handleCategoryDelete} 
         newCategories={newCategories} />
      
-      
+      {/* Send to CategoryManage to create new Category */}
+      <Pressable 
+        onPress={navigateToCategoryManage}
+        style={{backgroundColor: '#9BBEC8', padding: 20, marginTop: 10, marginBottom: 10, marginLeft: 20, marginRight: 20,}}>
+        <Text style={{ color: 'white', fontSize: 20 }}>
+          Create New Category
+        </Text>
+      </Pressable>
 
       {/*Modal for the category*/}
       <Modal 
