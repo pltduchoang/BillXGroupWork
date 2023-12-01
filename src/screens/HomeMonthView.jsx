@@ -7,6 +7,9 @@ import EditExpenseForm from '../components/EditExpenseForm';
 import AddExpenseForm from '../components/AddExpenseForm';
 import { getCategoryData } from '../services/CategoryServices';
 import { getAccountData } from '../services/AccountServices';
+// import BezierGraphChart from '../components/BezierGraphChart';
+// import AppPieChart from '../components/PieChart';
+
 
 function HomeMonthView() {
   // Spending data control
@@ -33,6 +36,14 @@ function HomeMonthView() {
   //Retractable list control
   const [thisMonthVisible, setThisMonthVisible] = useState(false);
   const [lastMonthVisible, setLastMonthVisible] = useState(false);
+
+
+  // Bezier graph data
+  const [graphData, setGraphData] = useState([]);
+  const [graphLabel, setGraphLabel] = useState([]);
+
+
+
 
   // Fetch account data and category from persistent storage
   const fetchCategoryData = async () => {
@@ -101,8 +112,7 @@ function HomeMonthView() {
   useEffect(() => {
     fetchData();
     // Find the maximum ID from the existing spendingData
-    const maxIdInDatabase = Math.max(...spendingData.map(expense => expense.id));
-    setMaxId(maxIdInDatabase);
+    
     // Assign a new ID to the newExpense
     
   }, []);
@@ -112,6 +122,9 @@ function HomeMonthView() {
     processSpendingData();
     fetchAccountData();
     fetchCategoryData();
+    const maxIdInDatabase = Math.max(...spendingData.map(expense => expense.id));
+    setMaxId(maxIdInDatabase);
+    processGraphData();
   }, [spendingData]);
 
   
@@ -168,7 +181,7 @@ function HomeMonthView() {
       ...newExpense,
       id: maxId + 1 // Increment the maximum ID by 1 to assign a new ID
     };
-    
+    console.log(updatedNewExpense);
     // Create a new database by adding the updatedNewExpense to spendingData
     const newDatabase = [...spendingData, updatedNewExpense];
     
@@ -180,12 +193,60 @@ function HomeMonthView() {
   };
 
 
+  const chartData = [
+    { name: 'Section 1', value: 30, color: '#FF5733' },
+    { name: 'Section 2', value: 50, color: '#33FF57' },
+    { name: 'Section 3', value: 20, color: '#3357FF' },
+  ];
+
+  // Graph data for 4 recent months
+  const processGraphData = () => {
+    if (spendingData.length > 0) {
+      const thisMonth = spendingData.filter((expense) => {
+        const expenseMonth = new Date(expense.time).getMonth() + 1;
+        return expenseMonth === currentMonth;
+      });
+      const lastMonth = spendingData.filter((expense) => {
+        const expenseMonth = new Date(expense.time).getMonth() + 1;
+        return expenseMonth === currentMonth - 1;
+      });
+      const lastLastMonth = spendingData.filter((expense) => {
+        const expenseMonth = new Date(expense.time).getMonth() + 1;
+        return expenseMonth === currentMonth - 2;
+      });
+      const lastLastLastMonth = spendingData.filter((expense) => {
+        const expenseMonth = new Date(expense.time).getMonth() + 1;
+        return expenseMonth === currentMonth - 3;
+      });
+      const thisMonthTotal = thisMonth.reduce((acc, expense) => acc + expense.amount, 0);
+      const lastMonthTotal = lastMonth.reduce((acc, expense) => acc + expense.amount, 0);
+      const lastLastMonthTotal = lastLastMonth.reduce((acc, expense) => acc + expense.amount, 0);
+      const lastLastLastMonthTotal = lastLastLastMonth.reduce((acc, expense) => acc + expense.amount, 0);
+      setGraphData([lastLastLastMonthTotal, lastLastMonthTotal, lastMonthTotal, thisMonthTotal]);
+      setGraphLabel([monthList[currentMonth - 4], monthList[currentMonth - 3], monthList[currentMonth - 2], monthList[currentMonth - 1]]);
+    }
+  };
+
+
+
 return (
   <SafeAreaView style={{ flex: 1, backgroundColor: '#164863' }}>
     <ScrollView>
-      
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ color: '#DDF2FD', marginBottom:50 }}>Welcome to Home Month View!</Text>
+        <Text style={{ color: '#DDF2FD', marginBottom:30 }}>Welcome to Home Month View!</Text>
+        
+        
+        {/* <Text style={{ color: '#DDF2FD'}}>Spending trend</Text>
+        <View style={{marginBottom:30}}>
+          <BezierGraphChart labelList={graphLabel} graphData={graphData} />
+        </View> */}
+        
+
+        {/* <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <AppPieChart data={chartData} />
+        </View> */}
+        
+        
         <TouchableOpacity onPress={() => setThisMonthVisible(prevState => !prevState)} >
           <Text style={{ 
             color: '#164863',
@@ -193,7 +254,8 @@ return (
             width: 500, 
             textAlign: 'center',
             lineHeight: 50,
-            }}>This month's record {monthList[currentMonth - 1]} - Balance: {thisMonthTotal}</Text>
+            fontWeight: 'bold',
+            }}>This month's record {monthList[currentMonth - 1]} - Balance: ${thisMonthTotal}</Text>
         </TouchableOpacity>
         {thisMonthVisible && thisMonthSpending.map((expense) => (
           <SpendingCard key={expense.id} spending={expense} onLongPress={handleLongPress}/>
@@ -205,7 +267,8 @@ return (
             width: 500, 
             textAlign: 'center',
             lineHeight: 50,
-            }}>Last month's record {monthList[currentMonth - 2]} - Balance: {lastMonthTotal}</Text>
+            fontWeight: 'bold',
+            }}>Last month's record {monthList[currentMonth - 2]} - Balance: ${lastMonthTotal}</Text>
         </TouchableOpacity>
         {lastMonthVisible && lastMonthSpending.map((expense) => (
           <SpendingCard key={expense.id} spending={expense} onLongPress={handleLongPress}/>
