@@ -6,59 +6,156 @@
 import React, { useState, useEffect } from 'react';
 import fetchData from '../services/CategoryServices';
 import { View, Text, Pressable, ScrollView, Modal } from 'react-native';
-
-import CategoryManage from './CategoryManage';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 
-// Buttons for the categories 
-const CategoryButtons = ({ categories, onClick, newCategories }) => {
-  return (
-    <View>
-        {/*Map for the buttons*/}
+const CategoryButtons = ({ categories, onClick, onDelete, newCategories }) => {
+    const [deleteConfirmationVisible, setDeleteConfirmationVisible] = useState(false);
+    const [categoryToDelete, setCategoryToDelete] = useState(null);
+  
+    // Delete confirmation modal
+    const showDeleteConfirmation = (category) => {
+      setCategoryToDelete(category);
+      setDeleteConfirmationVisible(true);
+    };
+  
+    // When the User confirms the delete
+    const confirmDelete = () => {
+      if (categoryToDelete) {
+        onDelete(categoryToDelete);
+        setDeleteConfirmationVisible(false);
+      }
+    };
+  
+    // When the User cancels the delete
+    const cancelDelete = () => {
+      setCategoryToDelete(null);
+      setDeleteConfirmationVisible(false);
+    };
+  
+    return (
+      <View>
+        {/* Map for the buttons */}
         {categories.map((category, index) => (
-            <Pressable 
-                key={index} 
-                onPress={() => onClick(category)} 
-                style={{ 
-                    backgroundColor: '#427D9D',
-                    padding: 20,
-                    margin: 10,
-                    borderRadius: 5 
-                }}
-            >
-                {/*Text for the buttons*/}
-                <Text style={{ color: 'white', fontSize:20 }}>
-                    {category.category}
-                </Text>
-            </Pressable>
-        ))}
-
-        {/* Map for the new category buttons */}
-        {newCategories.map((newCategory, index) => (
+          <View key={index} style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Pressable
-            key={index}
-            onPress={() => onClick(newCategory)}
-            style={{
+              onPress={() => onClick(category)}
+              style={{
                 backgroundColor: '#427D9D',
                 padding: 20,
-                margin: 10,
-                borderRadius: 5,
-            }}
+                marginBottom: 10,
+                marginTop: 10,
+                marginLeft: 20,
+                width: '80%',
+              }}
             >
-            {/* Text for the new category buttons */}
-            <Text style={{ color: 'white', fontSize: 20 }}>{newCategory}</Text>
+              {/* Text for the buttons */}
+              <Text style={{ color: 'white', fontSize: 20 }}>{category.category}</Text>
             </Pressable>
+  
+            {/* Delete button */}
+            <Pressable
+              onPress={() => showDeleteConfirmation(category)}
+              style={{
+                backgroundColor: '#9BBEC8',
+                padding: 15,
+                height: 67,
+                textAlign: 'center',
+                textAlignVertical: 'center',
+                width: '10%',
+                marginBottom: 10,
+                marginTop: 10,
+                marginRight: 20,
+              }}
+            >
+              <Text style={{ color: 'white', fontSize: 20 }}>X</Text>
+            </Pressable>
+          </View>
         ))}
-    </View>
-  );
-};
+  
+        {/* Map for the new category buttons */}
+        {newCategories.map((newCategory, index) => (
+          <View key={index} style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Pressable
+              onPress={() => onClick(newCategory)}
+              style={{
+                backgroundColor: '#427D9D',
+                padding: 20,
+                marginBottom: 10,
+                width: '80%',
+                marginTop: 10,
+                marginLeft: 20,
+              }}
+            >
+              {/* Text for the new category buttons */}
+              <Text style={{ color: 'white', fontSize: 20 }}>{newCategory}</Text>
+            </Pressable>
+  
+            {/* Delete button for new categories */}
+            <Pressable
+              onPress={() => showDeleteConfirmation(newCategory)}
+              style={{
+                backgroundColor: '#9BBEC8',
+                padding: 15,
+                height: 67,
+                textAlign: 'center',
+                textAlignVertical: 'center',
+                width: '10%',
+                marginBottom: 10,
+                marginTop: 10,
+                marginRight: 20,
+              }}
+            >
+              <Text style={{ color: 'white', fontSize: 20 }}>X</Text>
+            </Pressable>
+          </View>
+        ))}
+  
+        {/* Delete confirmation modal */}
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={deleteConfirmationVisible}
+          onRequestClose={cancelDelete}
+        >
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10, width: '80%' }}>
+              <Text style={{ fontSize: 20, marginBottom: 10 }}>
+                Are you sure you want to delete this category?
+              </Text>
+              <Pressable
+                onPress={confirmDelete}
+                style={{
+                  backgroundColor: 'red',
+                  padding: 15,
+                  borderRadius: 5,
+                  marginBottom: 10,
+                }}
+              >
+                <Text style={{ color: 'white', fontSize: 18, textAlign: 'center' }}>Delete</Text>
+              </Pressable>
+              <Pressable
+                onPress={cancelDelete}
+                style={{
+                  backgroundColor: '#427D9D',
+                  padding: 15,
+                  borderRadius: 5,
+                }}
+              >
+                <Text style={{ color: 'white', fontSize: 18, textAlign: 'center' }}>Cancel</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+      </View>
+    );
+  };
 
 
 function CategoryOverview() {
   const navigation = useNavigation();
   const route = useRoute();
-  const { newCategories } = route.params || { newCategories: [] };
+  const { newCategories } = route.params || { newCategories: [] }; // allows receiving new categories from CategoryManage
 
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [modalVisable, setModalVisable] = useState(false);
@@ -86,6 +183,7 @@ function CategoryOverview() {
     fetchDataAndProccess();
   }, []);
 
+  // UseEffect to update allItems when the route changes
   useEffect(() => {
     // Access the new categories from the route parameters
     const { params } = route;
@@ -149,14 +247,34 @@ function CategoryOverview() {
   };
 
   // Array for Month Names
-   const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-  
+  // Delete the category
+  const handleCategoryDelete = (categoryToDelete) => {
+    const updateCategories = allItems.filter((item) => item.category !== categoryToDelete.category);
+    setAllItems(updateCategories);
+    // for new categories deletion
+    const isDeletedNewCategory = newCategories.includes(categoryToDelete);
+    if (isDeletedNewCategory) {
+        const updatedNewCategories = newCategories.filter((newCat) => newCat !== categoryToDelete);
+        // Deletes the category in CategoryOverview
+        navigation.setParams({ newCategories: updatedNewCategories });
+        // Deletes the category in CategoryManage
+        navigation.navigate('CategoryMange', { updatedCategories: updatedNewCategories });
+    }
+  };
+
+ 
+
 
   return (
       <ScrollView style={{backgroundColor: '#164863'}}>
       <Text style={{ fontSize: 20, color: 'white', textAlign: 'center', padding: 10}}>Categories of your Expenses</Text>
-      <CategoryButtons categories={uniqueCategories} onClick={handleCategoryClick} newCategories={newCategories} />
+      <CategoryButtons 
+        categories={uniqueCategories} 
+        onClick={handleCategoryClick}
+        onDelete={handleCategoryDelete} 
+        newCategories={newCategories} />
      
       
 
@@ -230,14 +348,6 @@ function CategoryOverview() {
               )}
           </ScrollView>    
       </Modal>
-
-      {/* {newCategoryPageVisible && (
-        <NewCategoryPage onCategoryAdded={(newCategory) => {
-          setNewCategoryPageVisible(false);
-          addNewCategory(newCategory);
-        }} />
-        
-      )} */}
 
       </ScrollView>
   );
