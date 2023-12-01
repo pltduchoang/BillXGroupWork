@@ -185,6 +185,7 @@ function CategoryOverview() {
   // UseEffect to fetch intial data already in the database
   useEffect(() => {
     fetchDataAndProccess();
+    fetchCategoryData();
   }, []);
 
   // UseEffect to update allItems when the route changes
