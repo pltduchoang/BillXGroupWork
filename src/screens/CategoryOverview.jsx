@@ -307,7 +307,7 @@ function CategoryOverview() {
     const lastCategory = lastOfArray();
     const newCategoryToSave = {
       id: generateNewId(),
-      category: lastCategory,
+      categoryName: lastCategory,
       budget: 0,
       record: [],   
     };
