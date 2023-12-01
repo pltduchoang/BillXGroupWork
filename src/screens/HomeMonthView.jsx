@@ -97,14 +97,14 @@ function HomeMonthView() {
         return expenseMonth === currentMonth;
       });
       setThisMonthSpending(thisMonth.sort((a, b) => a.time - b.time));
-      setThisMonthTotal(thisMonth.reduce((acc, expense) => acc + expense.amount, 0));
+      setThisMonthTotal(Math.round(thisMonth.reduce((acc, expense) => acc + expense.amount, 0)));
   
       const lastMonth = spendingData.filter((expense) => {
         const expenseMonth = new Date(expense.time).getMonth() + 1;
         return expenseMonth === currentMonth - 1;
       });
       setLastMonthSpending(lastMonth.sort((a, b) => a.time - b.time));
-      setLastMonthTotal(lastMonth.reduce((acc, expense) => acc + expense.amount, 0));
+      setLastMonthTotal(Math.round(lastMonth.reduce((acc, expense) => acc + expense.amount, 0)));
     }
   };
   
@@ -227,12 +227,6 @@ function HomeMonthView() {
     console.log(pieChartData);
     setPieChartData(pieChartData);
   };
-  
-
-
-      
-
-
 
   // Graph data for 4 recent months
   const processGraphData = () => {
@@ -253,8 +247,8 @@ function HomeMonthView() {
         const expenseMonth = new Date(expense.time).getMonth() + 1;
         return expenseMonth === currentMonth - 3;
       });
-      const thisMonthTotal = Math.round(thisMonth.reduce((acc, expense) => acc + expense.amount, 0));
-      const lastMonthTotal = Math.round(lastMonth.reduce((acc, expense) => acc + expense.amount, 0));
+      const thisMonthTotal = thisMonth.reduce((acc, expense) => acc + expense.amount, 0);
+      const lastMonthTotal = lastMonth.reduce((acc, expense) => acc + expense.amount, 0);
       const lastLastMonthTotal = lastLastMonth.reduce((acc, expense) => acc + expense.amount, 0);
       const lastLastLastMonthTotal = lastLastLastMonth.reduce((acc, expense) => acc + expense.amount, 0);
       setGraphData([lastLastLastMonthTotal, lastLastMonthTotal, lastMonthTotal, thisMonthTotal]);

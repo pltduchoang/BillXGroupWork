@@ -97,14 +97,14 @@ function HomeMonthView() {
         return expenseMonth === currentMonth;
       });
       setThisMonthSpending(thisMonth.sort((a, b) => a.time - b.time));
-      setThisMonthTotal(thisMonth.reduce((acc, expense) => acc + expense.amount, 0));
+      setThisMonthTotal(Math.round(thisMonth.reduce((acc, expense) => acc + expense.amount, 0)));
   
       const lastMonth = spendingData.filter((expense) => {
         const expenseMonth = new Date(expense.time).getMonth() + 1;
         return expenseMonth === currentMonth - 1;
       });
       setLastMonthSpending(lastMonth.sort((a, b) => a.time - b.time));
-      setLastMonthTotal(lastMonth.reduce((acc, expense) => acc + expense.amount, 0));
+      setLastMonthTotal(Math.round(lastMonth.reduce((acc, expense) => acc + expense.amount, 0)));
     }
   };
   
@@ -126,6 +126,7 @@ function HomeMonthView() {
     setMaxId(maxIdInDatabase);
     processGraphData();
     createChartData();
+    console.log("launched");
   }, [spendingData]);
 
   
@@ -198,9 +199,12 @@ function HomeMonthView() {
   //   { name: 'Section 2', value: 50, color: '#33FF57' },
   //   { name: 'Section 3', value: 20, color: '#3357FF' },
   // ];
-  //Create pie chart data for each category in this month
+
+  
+  //Prepare pie chart data
+  const colorListPieChart = ['#1f8ac5','#529bc3','#166692','#0e425e','#061e2b','#112029','#203d4f','#010102'];
+
   const createChartData = () => {
-    const baseColor = '#9BBEC8'; // Base color
     const pieChartData = [];
     if (spendingData.length > 0) {
       categoryData.forEach((category, index) => {
@@ -211,25 +215,18 @@ function HomeMonthView() {
             catTotal += expense.amount;
           }
         });
-  
-        // Adjust the opacity level for different shades
-        const opacity = 0.2 + index * 0.15; // Adjust these values as needed
-  
-        // Construct the color with adjusted opacity
-        const color = `${baseColor}${Math.floor(opacity * 255).toString(16).toUpperCase()}`;
-  
+
+        catTotal = Math.round(catTotal);
+
+        // Use modulo operator to cycle through the color list
+        const color = colorListPieChart[index % colorListPieChart.length];
+
         pieChartData.push({ name: catName, value: catTotal, color });
       });
     }
     console.log(pieChartData);
     setPieChartData(pieChartData);
   };
-  
-
-
-      
-
-
 
   // Graph data for 4 recent months
   const processGraphData = () => {
@@ -273,8 +270,8 @@ return (
           <BezierGraphChart labelList={graphLabel} graphData={graphData} />
         </View>
         
-
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text style={{ color: '#DDF2FD', marginTop: 20}}>Category Spending</Text>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginBottom:20 }}>
           <AppPieChart data={pieChartData} />
         </View> */}
         
