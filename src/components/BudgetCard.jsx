@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Modal, TouchableOpacity, StyleSheet } from 'react-native';
+import { ScrollView, View, Text, Modal, TouchableOpacity, StyleSheet } from 'react-native';
 
 const CustomModal = ({ isVisible, onClose, title, content }) => {
   return (
@@ -9,16 +9,20 @@ const CustomModal = ({ isVisible, onClose, title, content }) => {
       visible={isVisible}
       onRequestClose={onClose}
     >
+      <ScrollView>
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <Text style={styles.modalTitle}>{title}</Text>
-          <Text style={styles.modalText}>{content}</Text>
+          
+            <Text style={styles.modalText}>{content}</Text>
+          
 
           <TouchableOpacity style={styles.closeButton} onPress={onClose}>
             <Text style={styles.closeButtonText}>Close</Text>
           </TouchableOpacity>
         </View>
       </View>
+      </ScrollView>
     </Modal>
   );
 };

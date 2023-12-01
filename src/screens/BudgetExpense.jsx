@@ -84,7 +84,7 @@ function BudgetPage() {
                       )
                     }/> */}
                     {Spending && Spending.filter((item) => (item.category == selectedSpendCategory.categoryName) && (item.type == "spend")).map((filteredItem) => (
-                        <View key={filteredItem.id} style={styles.block}>
+                        <View key={filteredItem.id} style={styles.blockModal}>
                           <Text>Amount: {filteredItem.amount}</Text>
                           <Text>Budget: {filteredItem.budget}</Text>
                           <Text>Description: {filteredItem.description}</Text>
@@ -124,7 +124,7 @@ function BudgetPage() {
                       )
                     }/> */}
                     {Spending && Spending.filter((item) => (item.category == selectedGainCategory.categoryName) && (item.type == "gain")).map((filteredItem) => (
-                        <View key={filteredItem.id} style={styles.block}>
+                        <View key={filteredItem.id} style={styles.blockModal}>
                           <Text>Amount: {filteredItem.amount}</Text>
                           <Text>Budget: {filteredItem.budget}</Text>
                           <Text>Description: {filteredItem.description}</Text>
@@ -146,28 +146,37 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#164863',
   },
   block: {
-    backgroundColor: '#9BBEC8',
+    padding: 10,
+    marginTop: 10,
+    marginBottom: 10,
+    borderRadius: 5,
+    width: '100%',
+  },
+  blockModal: {
     padding: 10,
     marginTop: 10,
     marginBottom: 10,
     borderRadius: 5,
     width: 250,
+    backgroundColor: '#9BBEC8',
   },
   title: {
     padding: 5,
     marginBottom: 2,
     textAlign: 'center',
-    backgroundColor: '#164863',
-    fontSize: 20,
+    backgroundColor: '#427D9D',
+    fontSize: 24,
     color: 'white',
   },
   text: {
-    padding: 16,
+    paddingVertical: 16,
+    paddingHorizontal: 12,
     margin: 2,
-    backgroundColor: '#427D9D',
-    fontSize: 16,
+    backgroundColor: '#9BBEC8',
+    fontSize: 20,
     color: 'white',
   },
 });
