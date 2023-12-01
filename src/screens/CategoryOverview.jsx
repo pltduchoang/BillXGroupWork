@@ -4,7 +4,7 @@
 // import { useState, useEffect } from 'react';
 // import CategoryServices from '../services/CategoryServices';
 import React, { useState, useEffect } from 'react';
-import fetchData from '../services/CategoryServices';
+import fetchData, { getCategoryData } from '../services/CategoryServices';
 import { View, Text, Pressable, ScrollView, Modal } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { updateCategoryData } from '../services/CategoryServices';
@@ -161,6 +161,8 @@ function CategoryOverview() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [modalVisable, setModalVisable] = useState(false);
   const [allItems, setAllItems] = useState([]);
+  const [categoryData, setCateGoryData] = useState([]);
+
 
   const fetchDataAndProccess = async () => {
     try {
@@ -200,7 +202,20 @@ function CategoryOverview() {
     }
   }, [route]);
 
+  //Get category data from services
+  const fetchCategoryData = async () => {
+    try {
+      const response = await getCategoryData();
+      if (response.success){
+        const data = response.data || [];
+        setCateGoryData(data);
 
+      }
+      console.log('Category data fetched successfully:', response.data);
+    } catch (error) {
+      console.error('Error fetching category data:', error);
+    }
+  };
 
   // Filter for the unique categories (for buttons)
   const uniqueCategories = allItems.filter(
@@ -285,22 +300,21 @@ function CategoryOverview() {
     return lastItem;
   };
 
+
+
   const saveToSpending = () => {
     const lastCategory = lastOfArray();
     const newCategoryToSave = {
       id: generateNewId(),
-      ammount: 0,
-      type: null,
-      time: null,
       category: lastCategory,
       budget: 0,
-      account: null,
-      description: null,
+      record: [],   
     };
     console.log(newCategories)
     console.log('New Category to save:', newCategoryToSave)
+    const newDataThingy = [...categoryData, newCategoryToSave];
     // Call the method to save to spending using updateCategoryData
-    updateCategoryData(newCategoryToSave)
+    updateCategoryData(newDataThingy)
       .then((response) => {
         // Handle the response if needed
         console.log('Category data updated successfully:', response);
