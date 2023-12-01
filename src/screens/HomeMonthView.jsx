@@ -96,15 +96,39 @@ function HomeMonthView() {
         const expenseMonth = new Date(expense.time).getMonth() + 1;
         return expenseMonth === currentMonth;
       });
-      setThisMonthSpending(thisMonth.sort((a, b) => a.time - b.time));
-      setThisMonthTotal(Math.round(thisMonth.reduce((acc, expense) => acc + expense.amount, 0)));
+  
+      const thisMonthSpend = thisMonth.filter((expense) => expense.type === 'spend');
+      const thisMonthGain = thisMonth.filter((expense) => expense.type === 'gain');
+  
+      const thisMonthSpendTotal = Math.round(
+        thisMonthSpend.reduce((acc, expense) => acc + expense.amount, 0)
+      );
+  
+      const thisMonthGainTotal = Math.round(
+        thisMonthGain.reduce((acc, expense) => acc + expense.amount, 0)
+      );
+  
+      setThisMonthSpending(thisMonthSpend.sort((a, b) => a.time - b.time));
+      setThisMonthTotal(thisMonthSpendTotal - thisMonthGainTotal);
   
       const lastMonth = spendingData.filter((expense) => {
         const expenseMonth = new Date(expense.time).getMonth() + 1;
         return expenseMonth === currentMonth - 1;
       });
-      setLastMonthSpending(lastMonth.sort((a, b) => a.time - b.time));
-      setLastMonthTotal(Math.round(lastMonth.reduce((acc, expense) => acc + expense.amount, 0)));
+  
+      const lastMonthSpend = lastMonth.filter((expense) => expense.type === 'spend');
+      const lastMonthGain = lastMonth.filter((expense) => expense.type === 'gain');
+  
+      const lastMonthSpendTotal = Math.round(
+        lastMonthSpend.reduce((acc, expense) => acc + expense.amount, 0)
+      );
+  
+      const lastMonthGainTotal = Math.round(
+        lastMonthGain.reduce((acc, expense) => acc + expense.amount, 0)
+      );
+  
+      setLastMonthSpending(lastMonthSpend.sort((a, b) => a.time - b.time));
+      setLastMonthTotal(lastMonthSpendTotal - lastMonthGainTotal);
     }
   };
   
@@ -126,7 +150,6 @@ function HomeMonthView() {
     setMaxId(maxIdInDatabase);
     processGraphData();
     createChartData();
-    console.log("launched");
   }, [spendingData]);
 
   
@@ -208,51 +231,103 @@ function HomeMonthView() {
     const pieChartData = [];
     if (spendingData.length > 0) {
       categoryData.forEach((category, index) => {
-        const catName = category.catName;
-        let catTotal = 0;
+        const catName = category.categoryName;
+        let catSpendTotal = 0;
+        let catGainTotal = 0;
+  
         thisMonthSpending.forEach((expense) => {
           if (category.record.includes(expense.id)) {
-            catTotal += expense.amount;
+            if (expense.type === 'spend') {
+              catSpendTotal += expense.amount;
+            } else if (expense.type === 'gain') {
+              catGainTotal += expense.amount;
+            }
           }
         });
-
-        catTotal = Math.round(catTotal);
-
+  
+        catSpendTotal = Math.round(catSpendTotal);
+        catGainTotal = Math.round(catGainTotal);
+  
+        const catTotal = Math.round(catSpendTotal - catGainTotal);
+  
         // Use modulo operator to cycle through the color list
         const color = colorListPieChart[index % colorListPieChart.length];
-
+  
         pieChartData.push({ name: catName, value: catTotal, color });
       });
+      setPieChartData(pieChartData);
     }
-    console.log(pieChartData);
-    setPieChartData(pieChartData);
   };
 
   // Graph data for 4 recent months
   const processGraphData = () => {
     if (spendingData.length > 0) {
-      const thisMonth = spendingData.filter((expense) => {
+      const thisMonthSpend = spendingData.filter((expense) => {
         const expenseMonth = new Date(expense.time).getMonth() + 1;
-        return expenseMonth === currentMonth;
+        return expenseMonth === currentMonth && expense.type === 'spend';
       });
-      const lastMonth = spendingData.filter((expense) => {
+  
+      const thisMonthGain = spendingData.filter((expense) => {
         const expenseMonth = new Date(expense.time).getMonth() + 1;
-        return expenseMonth === currentMonth - 1;
+        return expenseMonth === currentMonth && expense.type === 'gain';
       });
-      const lastLastMonth = spendingData.filter((expense) => {
+  
+      const lastMonthSpend = spendingData.filter((expense) => {
         const expenseMonth = new Date(expense.time).getMonth() + 1;
-        return expenseMonth === currentMonth - 2;
+        return expenseMonth === currentMonth - 1 && expense.type === 'spend';
       });
-      const lastLastLastMonth = spendingData.filter((expense) => {
+  
+      const lastMonthGain = spendingData.filter((expense) => {
         const expenseMonth = new Date(expense.time).getMonth() + 1;
-        return expenseMonth === currentMonth - 3;
+        return expenseMonth === currentMonth - 1 && expense.type === 'gain';
       });
-      const thisMonthTotal = thisMonth.reduce((acc, expense) => acc + expense.amount, 0);
-      const lastMonthTotal = lastMonth.reduce((acc, expense) => acc + expense.amount, 0);
-      const lastLastMonthTotal = lastLastMonth.reduce((acc, expense) => acc + expense.amount, 0);
-      const lastLastLastMonthTotal = lastLastLastMonth.reduce((acc, expense) => acc + expense.amount, 0);
-      setGraphData([lastLastLastMonthTotal, lastLastMonthTotal, lastMonthTotal, thisMonthTotal]);
-      setGraphLabel([monthList[currentMonth - 4], monthList[currentMonth - 3], monthList[currentMonth - 2], monthList[currentMonth - 1]]);
+  
+      const lastLastMonthSpend = spendingData.filter((expense) => {
+        const expenseMonth = new Date(expense.time).getMonth() + 1;
+        return expenseMonth === currentMonth - 2 && expense.type === 'spend';
+      });
+  
+      const lastLastMonthGain = spendingData.filter((expense) => {
+        const expenseMonth = new Date(expense.time).getMonth() + 1;
+        return expenseMonth === currentMonth - 2 && expense.type === 'gain';
+      });
+  
+      const lastLastLastMonthSpend = spendingData.filter((expense) => {
+        const expenseMonth = new Date(expense.time).getMonth() + 1;
+        return expenseMonth === currentMonth - 3 && expense.type === 'spend';
+      });
+  
+      const lastLastLastMonthGain = spendingData.filter((expense) => {
+        const expenseMonth = new Date(expense.time).getMonth() + 1;
+        return expenseMonth === currentMonth - 3 && expense.type === 'gain';
+      });
+  
+      const thisMonthSpendTotal = thisMonthSpend.reduce((acc, expense) => acc + expense.amount, 0);
+      const thisMonthGainTotal = thisMonthGain.reduce((acc, expense) => acc + expense.amount, 0);
+      const lastMonthSpendTotal = lastMonthSpend.reduce((acc, expense) => acc + expense.amount, 0);
+      const lastMonthGainTotal = lastMonthGain.reduce((acc, expense) => acc + expense.amount, 0);
+      const lastLastMonthSpendTotal = lastLastMonthSpend.reduce((acc, expense) => acc + expense.amount, 0);
+      const lastLastMonthGainTotal = lastLastMonthGain.reduce((acc, expense) => acc + expense.amount, 0);
+      const lastLastLastMonthSpendTotal = lastLastLastMonthSpend.reduce((acc, expense) => acc + expense.amount, 0);
+      const lastLastLastMonthGainTotal = lastLastLastMonthGain.reduce((acc, expense) => acc + expense.amount, 0);
+  
+      const thisMonthTotal = thisMonthSpendTotal - thisMonthGainTotal;
+      const lastMonthTotal = lastMonthSpendTotal - lastMonthGainTotal;
+      const lastLastMonthTotal = lastLastMonthSpendTotal - lastLastMonthGainTotal;
+      const lastLastLastMonthTotal = lastLastLastMonthSpendTotal - lastLastLastMonthGainTotal;
+  
+      setGraphData([
+        lastLastLastMonthTotal,
+        lastLastMonthTotal,
+        lastMonthTotal,
+        thisMonthTotal
+      ]);
+      setGraphLabel([
+        monthList[currentMonth - 4],
+        monthList[currentMonth - 3],
+        monthList[currentMonth - 2],
+        monthList[currentMonth - 1]
+      ]);
     }
   };
 
@@ -262,7 +337,7 @@ return (
   <SafeAreaView style={{ flex: 1, backgroundColor: '#164863' }}>
     <ScrollView>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ color: '#DDF2FD', marginBottom:30 }}>Welcome to Home Month View!</Text>
+        <Text style={{ color: '#DDF2FD', marginBottom:30, fontSize:20, marginTop: 10 }}>Welcome to Home Month View!</Text>
         
         
         {/* <Text style={{ color: '#DDF2FD'}}>Spending trend</Text>
@@ -282,8 +357,9 @@ return (
             backgroundColor: '#9BBEC8', 
             width: 500, 
             textAlign: 'center',
-            lineHeight: 50,
+            lineHeight: 100,
             fontWeight: 'bold',
+            fontSize: 15,
             }}>This month's record {monthList[currentMonth - 1]} - Balance: ${thisMonthTotal}</Text>
         </TouchableOpacity>
         {thisMonthVisible && thisMonthSpending.map((expense) => (
@@ -295,8 +371,9 @@ return (
             backgroundColor: '#9BBEC8', 
             width: 500, 
             textAlign: 'center',
-            lineHeight: 50,
+            lineHeight: 100,
             fontWeight: 'bold',
+            fontSize: 15,
             }}>Last month's record {monthList[currentMonth - 2]} - Balance: ${lastMonthTotal}</Text>
         </TouchableOpacity>
         {lastMonthVisible && lastMonthSpending.map((expense) => (

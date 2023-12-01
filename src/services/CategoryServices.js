@@ -13,7 +13,6 @@ export const getCategoryData = async () => {
     const categoryDataFile = RNFS.DocumentDirectoryPath + '/src/database/category.json';
     const categoryData = await RNFS.readFile(categoryDataFile, 'utf8');
     const parsedCategoryData = JSON.parse(categoryData);
-    console.log('parsedCategoryData:', parsedCategoryData);
     return { success: true, data: parsedCategoryData, error: null };
   } catch (error) {
     console.error('Error reading category data:', error);

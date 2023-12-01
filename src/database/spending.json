@@ -538,5 +538,265 @@
       "budget": 50000,
       "account": "Scotia Credit",
       "description": "Shopping spree"
+    },
+    {
+      "id": 55,
+      "amount": 999.99,
+      "type": "gain",
+      "time": "2023-12-02T09:15:00Z",
+      "category": "Groceries",
+      "budget": 0,
+      "account": "TD Credit",
+      "description": "Cashback"
+    },
+    {
+      "id": 56,
+      "amount": 2345.67,
+      "type": "spend",
+      "time": "2023-12-01T14:00:00Z",
+      "category": "Transportation",
+      "budget": 0,
+      "account": "Scotia Saving",
+      "description": "Gas"
+    },
+    {
+      "id": 57,
+      "amount": 4321.98,
+      "type": "spend",
+      "time": "2023-12-30T11:30:00Z",
+      "category": "Personal",
+      "budget": 10000,
+      "account": "TD Chequing",
+      "description": "Shopping spree"
+    },
+    {
+      "id": 58,
+      "amount": 888.88,
+      "type": "gain",
+      "time": "2023-09-29T18:00:00Z",
+      "category": "Recurring",
+      "budget": 0,
+      "account": "Scotia Credit",
+      "description": "Cashback"
+    },
+    {
+      "id": 59,
+      "amount": 7654.32,
+      "type": "spend",
+      "time": "2023-09-28T10:45:00Z",
+      "category": "Business",
+      "budget": 20000,
+      "account": "TD Credit",
+      "description": "Office supplies"
+    },
+    {
+      "id": 60,
+      "amount": 234.56,
+      "type": "gain",
+      "time": "2023-12-27T09:30:00Z",
+      "category": "Utilities",
+      "budget": 15000,
+      "account": "Scotia Saving",
+      "description": "Refund"
+    },
+    {
+      "id": 61,
+      "amount": 1500.00,
+      "type": "spend",
+      "time": "2023-12-26T14:20:00Z",
+      "category": "Entertainment",
+      "budget": 50000,
+      "account": "TD Chequing",
+      "description": "Movie night"
+    },
+    {
+      "id": 62,
+      "amount": 5000.00,
+      "type": "spend",
+      "time": "2023-12-25T08:45:00Z",
+      "category": "Groceries",
+      "budget": 0,
+      "account": "Scotia Credit",
+      "description": "Grocery shopping"
+    },
+    {
+      "id": 63,
+      "amount": 123.45,
+      "type": "gain",
+      "time": "2023-09-24T17:00:00Z",
+      "category": "Transportation",
+      "budget": 0,
+      "account": "TD Credit",
+      "description": "Refund"
+    },
+    {
+      "id": 64,
+      "amount": 9876.54,
+      "type": "spend",
+      "time": "2023-12-23T12:30:00Z",
+      "category": "Personal",
+      "budget": 10000,
+      "account": "Scotia Saving",
+      "description": "Shopping spree"
+    },
+    {
+      "id": 65,
+      "amount": 999.99,
+      "type": "gain",
+      "time": "2023-12-22T09:15:00Z",
+      "category": "Recurring",
+      "budget": 0,
+      "account": "TD Chequing",
+      "description": "Cashback"
+    },
+    {
+      "id": 66,
+      "amount": 2345.67,
+      "type": "spend",
+      "time": "2023-09-21T14:00:00Z",
+      "category": "Business",
+      "budget": 20000,
+      "account": "Scotia Credit",
+      "description": "Office supplies"
+    },
+    {
+      "id": 67,
+      "amount": 4321.98,
+      "type": "spend",
+      "time": "2023-09-20T11:30:00Z",
+      "category": "Utilities",
+      "budget": 15000,
+      "account": "TD Credit",
+      "description": "Electricity bill"
+    },
+    {
+      "id": 68,
+      "amount": 888.88,
+      "type": "gain",
+      "time": "2023-09-19T18:00:00Z",
+      "category": "Entertainment",
+      "budget": 50000,
+      "account": "Scotia Saving",
+      "description": "Reimbursement"
+    },
+    {
+      "id": 69,
+      "amount": 7654.32,
+      "type": "spend",
+      "time": "2023-09-18T10:45:00Z",
+      "category": "Groceries",
+      "budget": 0,
+      "account": "TD Chequing",
+      "description": "Grocery shopping"
+    },
+    {
+      "id": 70,
+      "amount": 234.56,
+      "type": "gain",
+      "time": "2023-12-17T09:30:00Z",
+      "category": "Transportation",
+      "budget": 0,
+      "account": "Scotia Credit",
+      "description": "Cashback"
+    },
+    {
+      "id": 71,
+      "amount": 1500.00,
+      "type": "spend",
+      "time": "2023-12-16T14:20:00Z",
+      "category": "Personal",
+      "budget": 10000,
+      "account": "TD Credit",
+      "description": "Shopping spree"
+    },
+    {
+      "id": 72,
+      "amount": 5000.00,
+      "type": "spend",
+      "time": "2023-12-15T08:45:00Z",
+      "category": "Recurring",
+      "budget": 0,
+      "account": "Scotia Saving",
+      "description": "Monthly subscription"
+    },
+    {
+      "id": 73,
+      "amount": 123.45,
+      "type": "gain",
+      "time": "2023-12-14T17:00:00Z",
+      "category": "Business",
+      "budget": 20000,
+      "account": "TD Chequing",
+      "description": "Refund"
+    },
+    {
+      "id": 74,
+      "amount": 9876.54,
+      "type": "spend",
+      "time": "2023-12-13T12:30:00Z",
+      "category": "Utilities",
+      "budget": 15000,
+      "account": "Scotia Credit",
+      "description": "Electricity bill"
+    },
+    {
+      "id": 75,
+      "amount": 999.99,
+      "type": "gain",
+      "time": "2023-12-12T09:15:00Z",
+      "category": "Entertainment",
+      "budget": 50000,
+      "account": "TD Credit",
+      "description": "Cashback"
+    },
+    {
+      "id": 76,
+      "amount": 2345.67,
+      "type": "spend",
+      "time": "2023-12-11T14:00:00Z",
+      "category": "Groceries",
+      "budget": 0,
+      "account": "Scotia Saving",
+      "description": "Grocery shopping"
+    },
+    {
+      "id": 77,
+      "amount": 4321.98,
+      "type": "spend",
+      "time": "2023-12-10T11:30:00Z",
+      "category": "Transportation",
+      "budget": 0,
+      "account": "TD Chequing",
+      "description": "Gas"
+    },
+    {
+      "id": 78,
+      "amount": 888.88,
+      "type": "gain",
+      "time": "2023-12-09T18:00:00Z",
+      "category": "Personal",
+      "budget": 10000,
+      "account": "Scotia Credit",
+      "description": "Reimbursement"
+    },
+    {
+      "id": 79,
+      "amount": 7654.32,
+      "type": "spend",
+      "time": "2023-12-08T10:45:00Z",
+      "category": "Recurring",
+      "budget": 0,
+      "account": "TD Credit",
+      "description": "Annual subscription"
+    },
+    {
+      "id": 80,
+      "amount": 234.56,
+      "type": "gain",
+      "time": "2023-12-07T09:30:00Z",
+      "category": "Business",
+      "budget": 20000,
+      "account": "Scotia Saving",
+      "description": "Cashback"
     }
   ]

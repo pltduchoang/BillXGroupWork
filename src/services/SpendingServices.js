@@ -8,12 +8,11 @@ export const getSpending = async () => {
     const spendingDataFile = RNFS.DocumentDirectoryPath + '/src/database/spending.json';
     const spendingData = await RNFS.readFile(spendingDataFile, 'utf8');
     const parsedSpendingData = JSON.parse(spendingData);
-
     // Log or perform operations with the parsed spending data here
-
-    return parsedSpendingData; // Return the parsed spending data if needed
+    return parsedSpendingData;
+     // Return the parsed spending data if needed
   } catch (error) {
-    console.error('Error reading spending data:', error);
+    console.error('Error reading spending data at service page:', error);
     return null; // Return null or handle the error accordingly
   }
 };
@@ -22,6 +21,7 @@ export const getSpending = async () => {
 // create spending data to the spending.json file
 export const createSpending = async (dataToWrite) => {
   try {
+    console.log('dataToWrite', dataToWrite);
     const spendingDataFile = RNFS.DocumentDirectoryPath + '/src/database/spending.json';
     const jsonData = JSON.stringify(dataToWrite); // Convert the data to a JSON string
 

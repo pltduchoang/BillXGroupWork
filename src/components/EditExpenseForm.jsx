@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#DDF2FD',
   },
   selectedButton: {
-    backgroundColor: '#9BBEC8',
+    backgroundColor: '#427D9D',
     // Additional styles for the selected button
   },
   buttonText: {

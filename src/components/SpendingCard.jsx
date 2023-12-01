@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { Card } from '@rneui/themed';
 
@@ -7,6 +7,10 @@ const SpendingCard = ({ spending, onLongPress }) => {
     const handleLongPress = () => {
       onLongPress(spending);
     };
+
+    useEffect(() => {
+      console.log('SpendingCard: useEffect: spending: ', spending);
+      }, []);
   
     return (
       <TouchableOpacity onLongPress={handleLongPress}>
