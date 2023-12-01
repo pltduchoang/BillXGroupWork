@@ -52,6 +52,7 @@ function HomeMonthView() {
       if (result.success) {
         const parsedCategoryData = result.data || []; // Ensuring parsed data exists
         setCategoryData(parsedCategoryData);
+        console.log("Home month View received category data",parsedCategoryData);
       } else {
         console.error('Error fetching category data:', result.error);
       }
@@ -65,6 +66,7 @@ function HomeMonthView() {
       if (result.success) {
         const parsedAccountData = result.data || []; // Ensuring parsed data exists
         setAccountData(parsedAccountData);
+        console.log("Home month View received account data",parsedAccountData);
       } else {
         console.error('Error fetching account data:', result.error);
       }

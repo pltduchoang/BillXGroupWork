@@ -81,19 +81,24 @@ const EditExpenseForm = ({ spending, category, account, isVisible, onSave, onDel
 
   useEffect(() => {
     setEditedExpense(spending);
-
-    const foundCategory = categoryList.find(category => category.record.includes(editedExpense.id));
-    setBelongToCategory(foundCategory);
-    setFirstBelongToCategory(foundCategory);
     setCategoryList(category);
-    console.log('Category changed:', category);
+    setAccountList(account);
 
+    if (spending && categoryList){
+
+      const foundCategory = categoryList.find(category => category.record.includes(editedExpense.id));
+      setBelongToCategory(foundCategory);
+      setFirstBelongToCategory(foundCategory);
+      setCategoryList(category);
+      console.log('Category changed:', category);
+    }
+    if (spending && accountList){
     const foundAccount = accountList.find(account => account.record.includes(editedExpense.id));
     setBelongToAccount(foundAccount);
     setFirstBelongToAccount(foundAccount);
     console.log('Account changed:', account);
     setAccountList(account);
-
+    }
     setSelectedType(editedExpense.type);
   }, [spending]);
 
