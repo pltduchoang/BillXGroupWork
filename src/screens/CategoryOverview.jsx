@@ -179,6 +179,7 @@ function CategoryOverview() {
     }
   };
  
+  // UseEffect to fetch intial data already in the database
   useEffect(() => {
     fetchDataAndProccess();
   }, []);
@@ -265,7 +266,9 @@ function CategoryOverview() {
   };
 
  
-
+  const navigateToCategoryManage = () => {
+    navigation.navigate('CategoryMange');
+  };
 
   return (
       <ScrollView style={{backgroundColor: '#164863'}}>
@@ -276,7 +279,14 @@ function CategoryOverview() {
         onDelete={handleCategoryDelete} 
         newCategories={newCategories} />
      
-      
+      {/* Send to CategoryManage to create new Category */}
+      <Pressable 
+        onPress={navigateToCategoryManage}
+        style={{backgroundColor: '#9BBEC8', padding: 20, marginTop: 10, marginBottom: 10, marginLeft: 20, marginRight: 20,}}>
+        <Text style={{ color: 'white', fontSize: 20 }}>
+          Create New Category
+        </Text>
+      </Pressable>
 
       {/*Modal for the category*/}
       <Modal 
