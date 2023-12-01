@@ -1,4 +1,3 @@
-// BudgetPage.js
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { getBudgetData }  from '../services/BudgetServices';
@@ -57,7 +56,6 @@ function BudgetPage() {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Text>Welcome to BudgetPage!</Text>
         {loading && <Text>Loading...</Text>}
         <View style={styles.block}>
           <Text style={styles.title}>Expense</Text>
