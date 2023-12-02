@@ -172,7 +172,7 @@ const AddExpenseForm = ({ category, account, nextID, isVisible, onSave, onClose 
           />
           <View style={styles.buttonContainer}>
             <TouchableOpacity onPress={handleSave} style={styles.buttonEnd}><Text style={{textAlign: 'center'}}>Save</Text></TouchableOpacity>
-            <TouchableOpacity onPress={onClose} style={styles.buttonEnd}><Text style={{textAlign: 'center'}}>Delete</Text></TouchableOpacity>
+            <TouchableOpacity onPress={onClose} style={styles.buttonEnd}><Text style={{textAlign: 'center'}}>Close</Text></TouchableOpacity>
           </View>
         </View>
       </ScrollView>
