@@ -192,6 +192,7 @@ function CategoryOverview() {
         budget: item.budget,
         record: item.record,
       }));
+      setAllItems(organizedData);
     } catch (error) {
       console.error('Error fetching category data:', error);
     }
@@ -202,6 +203,7 @@ function CategoryOverview() {
   useEffect(() => {
     fetchDataAndProccess();
     fetchCategoryData();
+    processData();
   }, [databaseVersion]);
 
   // UseEffect to update allItems when the route changes
