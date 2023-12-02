@@ -13,7 +13,7 @@ export default function AccountCard({accountAndSpending, onLongPress}) {
 
 
     return (
-        <TouchableOpacity onLongPress={handleLongPress} style={{
+        <TouchableOpacity onPress={handleLongPress} style={{
             marginBottom: 10,
         }}>
             <Card 

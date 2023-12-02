@@ -1,16 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Modal, StyleSheet, TouchableOpacity } from 'react-native';
 
 
-export default function AddAccountForm ({ isVisible, onSave, onClose }) {
-  const [newAccount, setNewAccount] = useState({
-    accountName: '',
-    record: [],
-  });
+export default function EditAccountForm ({ editedAccount, isVisible, onSave, onClose, onDelete }) {
+    const [newAccount, setNewAccount] = useState({
+      id: editedAccount.id,
+      accountName: editedAccount.accountName, // Use the correct variable here
+      record: editedAccount.record,
+    });
+  
+    const handleSave = () => {
+      onSave(newAccount);
+    };
+  
+    const handleDelete = () => {
+      onDelete(newAccount);
+    };
 
-  const handleSave = () => {
-    onSave(newAccount);
-  };
+    useEffect(() => {
+        setNewAccount(editedAccount);
+        }, [editedAccount]);
 
   return (
     <Modal visible={isVisible} animationType="slide" transparent={true}>
@@ -21,7 +30,7 @@ export default function AddAccountForm ({ isVisible, onSave, onClose }) {
           <TextInput
             value={newAccount.accountName}
             onChangeText={(text) => setNewAccount({ ...newAccount, accountName: text })}
-            placeholder="Enter A Name"
+            placeholder="Enter An Account Name"
             style={styles.input}
           />
           <View style={styles.buttonContainer}>
@@ -32,6 +41,9 @@ export default function AddAccountForm ({ isVisible, onSave, onClose }) {
               <Text style={styles.buttonText}>Close</Text>
             </TouchableOpacity>
           </View>
+            <TouchableOpacity onPress={handleDelete} style={styles.button}>
+              <Text style={styles.buttonText}>Delete</Text>
+            </TouchableOpacity>
         </View>
       </View>
     </Modal>

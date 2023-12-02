@@ -13,7 +13,7 @@ const SpendingCard = ({ spending, onLongPress }) => {
       }, []);
   
     return (
-      <TouchableOpacity onLongPress={handleLongPress}>
+      <TouchableOpacity onPress={handleLongPress}>
         <Card
           containerStyle={
             {

@@ -4,8 +4,10 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Button } from '@rneui/themed';// Assuming you have a service for creating expenses
 import { updateCategoryData } from '../services/CategoryServices';
 import { updateAccountData } from '../services/AccountServices';
+import { useAppContext } from '../utils/AppContext';
 
 const AddExpenseForm = ({ category, account, nextID, isVisible, onSave, onClose }) => {
+  const { databaseVersion, setDatabaseVersion } = useAppContext();
   const [newExpense, setNewExpense] = useState({
     amount: '',
     type: '',
@@ -44,6 +46,7 @@ const AddExpenseForm = ({ category, account, nextID, isVisible, onSave, onClose 
       setNewExpense({ ...newExpense, time: new Date() });
     }
     console.log(newExpense);
+    setDatabaseVersion(databaseVersion + 1);
     onSave(newExpense); // Trigger callback to inform the parent component about the save action
   };
 

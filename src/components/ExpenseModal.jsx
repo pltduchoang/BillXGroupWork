@@ -115,7 +115,7 @@ const ExpenseModal = ({ visible, expenses, closeModal}) => {
           <Text style={{color:"#DDF2FD", marginBottom: 20, fontSize: 20}}>Expenses This Month</Text>
           {expenses && expenses.map((spending) => (
             <TouchableOpacity style={{marginBottom: 20}} key={spending.id}
-            onLongPress={() => handleLongPress(spending)}>
+            onPress={() => handleLongPress(spending)}>
             <Card
               containerStyle={
                 {
@@ -131,12 +131,15 @@ const ExpenseModal = ({ visible, expenses, closeModal}) => {
                   alignItems: "center",
                 }
               }>
-                <Text style={{ color: "#DDF2FD", textAlign: "center" }}>{spending.amount}</Text>
-                <Text style={{ color: "#DDF2FD", textAlign: "center" }}>{spending.description}</Text>
+                <Text style={{ color: "#DDF2FD", textAlign:'center'}}>{spending.amount}</Text>
+                <Text style={{ color: "#DDF2FD", textAlign:'center'}}>{spending.description}</Text>
               </Card>
           </TouchableOpacity>
           ))}
-          <Button title="Close" onPress={closeModal}/>
+          <TouchableOpacity style={{marginBottom: 40, backgroundColor: '#427D9D', padding: 20, borderRadius:10}} onPress={closeModal}>
+              <Text style={{ color: '#DDF2FD', textAlign:'center'}}> Close </Text>
+          </TouchableOpacity>
+          
         </View>
         </ScrollView>
         {isEditModalVisible && selectedExpense && (

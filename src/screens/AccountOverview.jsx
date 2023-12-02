@@ -93,14 +93,11 @@ function AccountOverView() {
     });
 
     setAccountAndSpending(updatedAccountAndSpending);
-    console.log("Account and spending:", updatedAccountAndSpending);
   };
   
   //Modal control
   // Handler to open the modal and set the selected account
   const handleLongPress = (accountAndSpending) => {
-    console.log("AccountCard: handleLongPress: accountAndSpending: ", accountAndSpending);
-    console.log("Account data:", accountData);
     const findAccount = accountData.find((account) => account.id === accountAndSpending.id);
     const expenseListThisMonthForCategory = findAccount.record
       .map((expenseID) => {
@@ -108,7 +105,6 @@ function AccountOverView() {
       })
       .filter((expense) => expense !== undefined); // Filter out undefined expenses
   
-    console.log("Expense list for category:", expenseListThisMonthForCategory);
     setExpenseListForCategory(expenseListThisMonthForCategory);
     setShowModal(true);
   };
