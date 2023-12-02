@@ -308,8 +308,8 @@ function CategoryOverview() {
   };
 
   const generateNewId = () => {
-    const totalItems = allItems.length + spendingData.length;
-    return totalItems + 1;
+    const maxID = categoryData.reduce((max, item) => (item.id > max ? item.id : max), 0);
+    return maxID + 1;
   };
 
   const lastOfArray = () => {
