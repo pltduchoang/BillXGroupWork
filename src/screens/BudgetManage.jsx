@@ -46,7 +46,7 @@ function BudgetManage({ onBudgetCreate }) {
       <Text style={styles.title}>Create Budget Plan</Text>
       <View style={styles.rowContainer}>
         <View>
-          <Text>Select Category:</Text>
+          <Text style={styles.textWhite}>Select Category:</Text>
           <Picker
             selectedValue={selectedCategory}
             onValueChange={(itemValue) => setSelectedCategory(itemValue)}
@@ -59,7 +59,7 @@ function BudgetManage({ onBudgetCreate }) {
         </View>
 
         <View>
-          <Text>Select Type:</Text>
+          <Text style={styles.textWhite}>Select Type:</Text>
           <Picker
             selectedValue={selectedType}
             onValueChange={(itemValue) => setSelectedType(itemValue)}
@@ -73,7 +73,7 @@ function BudgetManage({ onBudgetCreate }) {
       </View>
 
       <View style={styles.inputContainer}>
-        <Text>Enter Budget($):</Text>
+        <Text style={styles.textWhite}>Enter Budget($):</Text>
         <TextInput
           style={styles.input}
           keyboardType="numeric"
@@ -83,7 +83,7 @@ function BudgetManage({ onBudgetCreate }) {
       </View>
 
       <View style={styles.inputContainer}>
-        <Text>Enter Description:</Text>
+        <Text style={styles.textWhite}>Enter Description:</Text>
         <TextInput
           style={styles.input}
           value={description}
@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#164863',
   },
   inputContainer: {
     marginBottom: 15,
@@ -119,11 +120,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     width: 200,
+    color: 'black',
+    backgroundColor: 'white',
   },
   rowContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '100%',
+    marginBottom: 15,
   },
   button: {
     backgroundColor: '#9BBEC8',
@@ -132,19 +136,17 @@ const styles = StyleSheet.create({
   },
   picker1: {
     width: 200,
-    borderColor: 'black',
-    borderStyle: 'solid',
+    backgroundColor: 'white',
   },
   picker2: {
     width: 150,
-    borderColor: 'black',
-    borderStyle: 'solid',
+    backgroundColor: 'white',
   },
   title: {
     padding: 10,
     marginBottom: 50,
     textAlign: 'center',
-    backgroundColor: '#164863',
+    backgroundColor: '#427D9D',
     fontSize: 20,
     color: 'white',
   },
@@ -156,6 +158,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'white',
     width: 150,
+  },
+  textWhite: {
+    color: 'white',
   },
 });
 
