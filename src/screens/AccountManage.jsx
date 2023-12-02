@@ -67,14 +67,14 @@ function AccountManage() {
           
       </ScrollView>
 
-    (showAddModal && (
+    {/* (showAddModal && (
       <AddAccountForm
         visible={showAddModal}
         closeModal={closeModal}
         onSave={handleSave}
       />
       )
-    );
+    ); */}
   </SafeAreaView>
   );
 }
