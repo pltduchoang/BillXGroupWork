@@ -8,6 +8,8 @@ import fetchData, { getCategoryData } from '../services/CategoryServices';
 import { View, Text, Pressable, ScrollView, Modal } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { updateCategoryData } from '../services/CategoryServices';
+import { useAppContext } from '../utils/AppContext';
+
 
 
 const CategoryButtons = ({ categories, onClick, onDelete, newCategories }) => {
@@ -162,7 +164,7 @@ function CategoryOverview() {
   const [modalVisable, setModalVisable] = useState(false);
   const [allItems, setAllItems] = useState([]);
   const [categoryData, setCateGoryData] = useState([]);
-
+  const { databaseVersion, setDatabaseVersion } = useAppContext();
 
   const fetchDataAndProccess = async () => {
     try {
@@ -182,11 +184,25 @@ function CategoryOverview() {
     }
   };
  
+  const processData = async () => {
+    try {
+      const organizedData = spendingData.map(item => ({
+        id: item.id,
+        categoryName: item.catagoryName,
+        budget: item.budget,
+        record: item.record,
+      }));
+    } catch (error) {
+      console.error('Error fetching category data:', error);
+    }
+  };
+
+
   // UseEffect to fetch intial data already in the database
   useEffect(() => {
     fetchDataAndProccess();
     fetchCategoryData();
-  }, []);
+  }, [databaseVersion]);
 
   // UseEffect to update allItems when the route changes
   useEffect(() => {
