@@ -345,7 +345,10 @@ return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text style={{ color: '#DDF2FD', marginBottom:30, fontSize:20, marginTop: 10 }}>Welcome to Home Month View!</Text>
         
-        
+        {/* NOTICE: THIS SECTION IS TO DISPLAY CHART WITH REALTIME DATA */}
+        {/* PERFORMANCE ISSUE CAUSING THE APP TO CRASH AT LAUNCH*/}
+        {/* TO DISPLAY GRAPH, LAUNCH THE APP FIRST, UN-COMMEND CODE AND SAVE PAGE CODE*/}
+
         {/* <Text style={{ color: '#DDF2FD'}}>Spending trend</Text>
         <View style={{marginBottom:30}}>
           <BezierGraphChart labelList={graphLabel} graphData={graphData} />
